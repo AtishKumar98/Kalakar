@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'Kalaakaar.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'database_2023_3.sqlite3',
+        'NAME': BASE_DIR / 'database_2023_5.sqlite3',
     }
 }
 

@@ -107,16 +107,6 @@ def Registration(request):
             message = f"Your Registration OTP for Kalakar is {otp}"
             send_OTP(p_number,message)
             
-            fms3= {
-                'Email':e,
-                'Password':p,
-                'Agreed':ag,
-                'Phone Number':p_number
-            }
-            print(fms3)
-            doc_reference = db.collection(u'Users').document(fms3['Email'])
-                #  db.collection(u'Users').add(fms)
-            doc_reference.set(fms3)
             # print(fms3)
             # for fms in fms3:
             #     doc_reference = db.collection(u'Users').document(fms['Email'])
@@ -143,11 +133,23 @@ def OTPRegistration(request):
         print(otp)
         hashed_pwd = make_password(request.session['password'])
         p_number = request.session.get('number')
+        ag = request.session.get('is_agreed')
         email_address = request.session.get('email')
         if int(u_otp)==otp:
             MyUser.objects.create(email=email_address,password=hashed_pwd)
             user_instance = MyUser.objects.get(email=email_address)
+            print(user_instance, '$$$$$$$$$$')
             Profile.objects.create(user=user_instance,phone_number=p_number)
+
+            fms3= {
+                'Email':email_address,
+                'Password':hashed_pwd,
+                'Agreed':ag,
+                'Phone Number':p_number
+            }
+            doc_reference = db.collection(u'Users').document(fms3['Email'])
+                #  db.collection(u'Users').add(fms)
+            doc_reference.set(fms3)
             request.session.delete('otp')
             request.session.delete('user')
             request.session.delete('password')
