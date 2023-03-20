@@ -17,14 +17,12 @@ def email_exists(value):
 class UserRegistrationForm(UserCreationForm):
     email = forms.EmailField( validators=[email_exists])
     email.widget.attrs['placeholder'] = "Enter Your Email"
-    date_of_birth = forms.DateField(input_formats=['%d-%m-%Y'])
 
     class Meta:
         model = MyUser
-        fields = ['email', 'password1', 'password2', 'is_agreed','date_of_birth']
+        fields = ['email', 'password1', 'password2', 'is_agreed']
         widgets = {
             'username': forms.TextInput(attrs={'placeholder': 'Enter Your Username'}),
-            'date_of_birth':forms.DateInput(format = '%Y%m%d')
         }
 
     def __init__(self, *args, **kwargs):

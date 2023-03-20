@@ -26,22 +26,8 @@ firebase_admin.initialize_app(cred)
 
 db = firestore.client()
 
-Obj_1 = {
-    'Name':'Atish',
-    'Age':'40',
-    'Net_worth':'100000'
-}
 
-Obj_2 = {
-    'Name':'Second_user',
-    'Age':'20',
-    'Net_worth':'1000'
-}
 
-data = [Obj_1, Obj_2]
-for record in data:
-    doc_reference = db.collection(u'Users').document(record['Name'])
-    doc_reference.set(record)
 
 
 # config = {
@@ -114,17 +100,36 @@ def Registration(request):
             hashed_pwd = make_password(request.session['password'])
             p_number = up.cleaned_data['phone_number']
             request.session['number'] = p_number
-            otp = random.randint(1000,9999)
+            otp = random.randint(100000,999999)
             print(otp)
             print(p_number)
             request.session['otp'] = otp
             message = f"Your Registration OTP for Kalakar is {otp}"
             send_OTP(p_number,message)
+            
+            fms3= {
+                'Email':e,
+                'Password':p,
+                'Agreed':ag,
+                'Phone Number':p_number
+            }
+            print(fms3)
+            doc_reference = db.collection(u'Users').document(fms3['Email'])
+                #  db.collection(u'Users').add(fms)
+            doc_reference.set(fms3)
+            # print(fms3)
+            # for fms in fms3:
+            #     doc_reference = db.collection(u'Users').document(fms['Email'])
+            #     #  db.collection(u'Users').add(fms)
+            #     doc_reference.set(fms)
             return redirect('/registration/OTP/')
+        
     else:
         fm = UserRegistrationForm()
         up = UserProfile()
     context = {'fm':fm, 'up':up,}
+    
+    
 
     return render (request, 'registration.html',context)
 
@@ -147,6 +152,9 @@ def OTPRegistration(request):
             request.session.delete('user')
             request.session.delete('password')
             messages.success(request,'Registration Done!')
+            # fms = MyUser.objects.values()
+            
+
             return redirect('/login/')
         else:
             messages.error(request, 'Wrong OTP Try Again')
