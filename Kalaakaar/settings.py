@@ -64,11 +64,17 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+                     
+        'libraries':{
+            'myfilters': 'kalaakaar_registration.templatetags.myfilters',
+            
+            }
         },
     },
 ]
 
 WSGI_APPLICATION = 'Kalaakaar.wsgi.application'
+
 
 
 # Database
@@ -77,7 +83,7 @@ WSGI_APPLICATION = 'Kalaakaar.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'database4.sqlite3',
     }
 }
 
@@ -99,6 +105,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTH_USER_MODEL = 'kalaakaar_registration.MyUser'
 
 
 # Internationalization

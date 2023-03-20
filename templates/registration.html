@@ -7,7 +7,7 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <title>KALAKAR</title>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
@@ -17,7 +17,18 @@
         display: flex;
         flex-direction: row;
       }
+      /* .boolean :hover input .form-check-input {
+            background-color: yellow;
+        } */
 
+      
+
+      .boolean{
+        display: flex;
+        flex-direction: row;
+
+      }
+     
       .slogan_div{
         width: 70%;
         height: 100vh;
@@ -37,7 +48,7 @@
         background-color: aliceblue;
       }
       .reg_card{
-        height: 70vh;
+        height: 70%;
         width: 80%;
         border-radius: 15px;
         font-size: 100%;
@@ -63,11 +74,92 @@
         text-transform: uppercase;
       }
       .btn{
-        width: 100%;
+        width: 95%;
+        position: relative;
+        margin-left: -3%;
+        margin-top: 4%;
+        transition: all 0.3s ease;
       }
+   
+
+    
+
       .reg_title_logo{
         color: rgb(240, 110, 190);
       }
+
+      .main {
+            display: block;
+            position: relative;
+            padding-left: 45px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            font-size: 80%;
+        }
+          
+        /* Hide the default checkbox */
+        input[type=checkbox] {
+            visibility: hidden;
+        }
+          
+        /* Creating a custom checkbox
+        based on demand */
+        .geekmark {
+            position: absolute;
+            top: 0;
+            left: 2%;
+            height: 55%;
+            width: 6.5%;
+            background-color: white;
+            border: 0.5px solid rgb(240, 110, 190);
+        }
+          
+        /* Specify the background color to be
+        shown when hovering over checkbox */
+        .main:hover input ~ .geekmark {
+            background-color: rgb(240, 110, 190);
+        }
+          
+        /* Specify the background color to be
+        shown when checkbox is active */
+        .main input:active ~ .geekmark {
+            background-color: rgb(240, 110, 190)red;
+        }
+          
+        /* Specify the background color to be
+        shown when checkbox is checked */
+        .main input:checked ~ .geekmark {
+            background-color: rgb(240, 110, 190);
+        }
+          
+        /* Checkmark to be shown in checkbox */
+        /* It is not be shown when not checked */
+        .geekmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+          
+        /* Display checkmark when checked */
+        .main input:checked ~ .geekmark:after {
+            display: block;
+        }
+          
+        /* Styling the checkmark using webkit */
+        /* Rotated the rectangle by 45 degree and 
+        showing only two border to make it look
+        like a tickmark */
+        .main .geekmark:after {
+            left: 8px;
+            bottom: 5px;
+            width: 7px;
+            height: 60%;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
     </style>
   </head>
   <body>
@@ -82,7 +174,7 @@
   <div class="reg_title">Register Now</div>
   <div class="card reg_card">
     <h1>Registration</h1>
-    <form method = 'POST' class="row g-3 m-2 mx-4" novalidate>{% csrf_token %}
+    <!-- <form method = 'POST' class="row g-3 m-2 mx-4" novalidate>{% csrf_token %}
       <input class="form-control" type="text" placeholder="Enter Your Full Name" aria-label=".form-control-lg example">
       <input class="form-control" type="text" placeholder="Choose Kalakar" aria-label=".form-control-lg example">
       <input class="form-control" type="text" placeholder="Enter Business Name" aria-label=".form-control-lg example">
@@ -92,11 +184,60 @@
       <input class="form-control" type="text" placeholder="Enter Your Password" aria-label=".form-control-lg example">
       <input class="form-control" type="text" placeholder="Confirm Your Password" aria-label=".form-control-lg example">
       <button type="submit" class="btn btn-dark" name="registration">Register</button>
+    </form> -->
+    <form method = 'POST' class="row g-3 m-2 mx-4" novalidate>{% csrf_token %}
+      
+      
+      {% load myfilters %}
+      <!-- <label for="exampleFormControlInput1" cl  ass="form-label">{{f.label}}</label><br><br> -->
+      
+      <span class ='text-danger'>{{f.errors}}</span>
+      
+      {{fm.email|addcss:'form-control'  }}
+      {{fm.email.errors}}
+      {{fm.password1|addcss:'form-control'  }}
+      {{fm.password1.errors}}
+      {{fm.password2|addcss:'form-control'  }}
+      {{fm.password2.errors}}
+      <!-- {{fm.date_of_birth}} -->
+      {{fm.errors}}
+      <!-- <label>{{up.phone_number.label }}</label><br><br> -->
+      {{up.phone_number|addcss:'form-control' }}
+      <span class ='text-danger'>{{up.phone_number.errors}}</span>
+      
+    <label class="main">I Agree on <a href='' style="color:rgb(240, 110, 190)" >  Terms & condition</a> Provided By Kalakaar
+      {{fm.is_agreed}}
+        <span class="geekmark"></span>
+    </label>
+      <div class="col-12" style="display: flex;justify-content: center;align-items: center;">
+          <button type="submit" id = 'btn' class="btn btn-dark" name="registration">Register</button>
+        </div>
     </form>
   </div>
 </div>
 </section>
   
+<script>
+
+var checker = document.getElementById('id_is_agreed');
+var sendbtn = document.getElementById('btn');
+ // when unchecked or checked, run the function
+ checker.onchange = function(){
+if(this.checked){
+    sendbtn.disabled = false;
+} else {
+    sendbtn.disabled = true;
+}
+
+}
+</script>
+<script>
+var date = $("#id_date_of_birth").attr("type","date");
+date.datepicker({
+      dateFormat: 'yyyy-mm-dd'
+});
+
+</script>
 
     <!-- Optional JavaScript; choose one of the two! -->
 

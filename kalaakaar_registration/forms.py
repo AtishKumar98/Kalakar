@@ -3,25 +3,41 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import Profile,phone_regex
-from django.core.exceptions import NON_FIELD_ERRORS
+from .models import MyUser
+from django.forms import TextInput,EmailInput,PasswordInput
 
 
 
 def email_exists(value):
-    if User.objects.filter(email=value).exists():
+    if MyUser.objects.filter(email=value).exists():
         raise forms.ValidationError("Profile with same email Already exists")
 
     
 
 class UserRegistrationForm(UserCreationForm):
-    email = forms.EmailField(validators=[email_exists])
+    email = forms.EmailField( validators=[email_exists])
+    email.widget.attrs['placeholder'] = "Enter Your Email"
+    date_of_birth = forms.DateField(input_formats=['%d-%m-%Y'])
+
     class Meta:
-        model = User
-        fields = ['username','email']
+        model = MyUser
+        fields = ['email', 'password1', 'password2', 'is_agreed','date_of_birth']
+        widgets = {
+            'username': forms.TextInput(attrs={'placeholder': 'Enter Your Username'}),
+            'date_of_birth':forms.DateInput(format = '%Y%m%d')
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(UserRegistrationForm, self).__init__(*args, **kwargs)
+        self.fields['password1'].widget = forms.PasswordInput(attrs={'placeholder': ("Enter Your Password")})
+        self.fields['password2'].widget = forms.PasswordInput(attrs={'placeholder': ("Confirm Your Password")})
+        # self.fields['date_of_birth'] = forms.DateField()
+
 
 class UserProfile(forms.ModelForm):
 
     phone_number = forms.CharField(max_length=17,validators=[phone_regex])
+    phone_number.widget.attrs['placeholder'] = "Enter Your Phone number"
     class Meta:
         model = Profile
         fields = ['phone_number']

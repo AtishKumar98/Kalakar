@@ -1,0 +1,20 @@
+<div class="card bg-dark text-light m-4">
+    <center>
+        <h1>
+            Registration
+        </h1>
+    </center>
+    <form method = 'POST' class="row g-3 m-2 mx-4" novalidate>{% csrf_token %}
+        {% for f in fm %}
+        <span class ='text-danger'>{{f.errors}}</span>
+        <label>{{f.label}}</label><br><br>
+        {{f}}
+        {% endfor %}
+        <span class ='text-danger'>{{up.phone_number.errors}}</span>
+        <label>{{up.phone_number.label}}</label><br><br>
+        {{up.phone_number}}
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary" name="registration">Submit</button>
+          </div>
+      </form>
+    </div>

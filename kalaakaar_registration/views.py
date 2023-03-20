@@ -3,7 +3,8 @@ from urllib import request
 from django.shortcuts import render, redirect
 from .forms import *
 from django.contrib import messages
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+from .models import MyUser
 from django.contrib.auth import authenticate, login
 from .models import Profile
 import json
@@ -11,9 +12,59 @@ import random
 from django.conf import settings
 from django.contrib.auth.hashers import make_password, check_password
 import requests
+import pyrebase
+
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import firestore
 
 
 
+path_for_cred_cert = './djangokalakar-firebase-adminsdk-ndlr6-e5182f449c.json'
+cred = credentials.Certificate(path_for_cred_cert)
+firebase_admin.initialize_app(cred)
+
+db = firestore.client()
+
+Obj_1 = {
+    'Name':'Atish',
+    'Age':'40',
+    'Net_worth':'100000'
+}
+
+Obj_2 = {
+    'Name':'Second_user',
+    'Age':'20',
+    'Net_worth':'1000'
+}
+
+data = [Obj_1, Obj_2]
+for record in data:
+    doc_reference = db.collection(u'Users').document(record['Name'])
+    doc_reference.set(record)
+
+
+# config = {
+#     "apiKey": "AIzaSyCxKIGyZtQrpM9PDIUnfveErB8quVQ-CgM",
+
+#     "authDomain": "djangokalakar.firebaseapp.com",
+
+#     "projectId": "djangokalakar",
+
+#     "storageBucket": "djangokalakar.appspot.com",
+
+#     "messagingSenderId": "138533441471",
+    
+#     "databaseURL" : "https://djangokalakar-default-rtdb.firebaseio.com",
+
+#     "appId": "1:138533441471:web:f788a787e58cc0fa701b0a",
+
+#     "measurementId": "G-HY46VV610J"
+
+# }
+# firebase = pyrebase.initialize_app(config)
+# auth =firebase.auth()
+# database = firebase.database()
 
 
 
@@ -46,16 +97,20 @@ def send_OTP(number, message):
 
 # Create your views here.
 def Registration(request):
+    # channel_name = database.child('Data').child('Minion').get().val()
+    # channel_type = database.child('Data').child('Bor').get().val()
     if request.method == 'POST' and 'registration' in request.POST:
         fm = UserRegistrationForm(request.POST)
         up = UserProfile(request.POST)
         if fm.is_valid() and up.is_valid():
             e = fm.cleaned_data['email']
-            u = fm.cleaned_data['username']
+            # u = fm.cleaned_data['username']
             p = fm.cleaned_data['password1']
+            ag= fm.cleaned_data['is_agreed']
             request.session['email'] = e
-            request.session['user'] = u
+            # request.session['user'] = u
             request.session['password'] = p
+            request.session['is_agreed'] = ag
             hashed_pwd = make_password(request.session['password'])
             p_number = up.cleaned_data['phone_number']
             request.session['number'] = p_number
@@ -63,13 +118,13 @@ def Registration(request):
             print(otp)
             print(p_number)
             request.session['otp'] = otp
-            message = f"Your OTP is {otp}"
+            message = f"Your Registration OTP for Kalakar is {otp}"
             send_OTP(p_number,message)
             return redirect('/registration/OTP/')
     else:
         fm = UserRegistrationForm()
         up = UserProfile()
-    context = {'fm':fm, 'up':up}
+    context = {'fm':fm, 'up':up,}
 
     return render (request, 'registration.html',context)
 
@@ -85,8 +140,8 @@ def OTPRegistration(request):
         p_number = request.session.get('number')
         email_address = request.session.get('email')
         if int(u_otp)==otp:
-            User.objects.create(username=user,email=email_address,password=hashed_pwd)
-            user_instance = User.objects.get(username=user)
+            MyUser.objects.create(email=email_address,password=hashed_pwd)
+            user_instance = MyUser.objects.get(email=email_address)
             Profile.objects.create(user=user_instance,phone_number=p_number)
             request.session.delete('otp')
             request.session.delete('user')
@@ -107,7 +162,7 @@ def UserLogin ( request ) :
         if user is not None :
              request.session ['username'] = username
              request.session ['password'] = password
-             u = User.objects.get(username = username) 
+             u = MyUser.objects.get(username = username) 
              p = Profile.objects.get(user=u)
              p_number = p.phone_number
              otp = random.randint ( 1000 , 9999 )
