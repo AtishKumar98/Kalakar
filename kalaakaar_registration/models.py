@@ -50,6 +50,21 @@ class MyUser(AbstractBaseUser):
         max_length=255,
         unique=True,
     )
+ 
+
+    Kalakaar = [
+        ("SL", 'Select A kalaakaar'),
+        ("CR", 'Choreographer'),
+        ("SR", 'Singer'),
+        ("TA", 'Tatoo Artist'),
+        ("PH", 'Photographer'),
+        ("VH", 'Videographer'),
+    ]
+    full_name = models.CharField(null=True,max_length=50)
+    choose_a_kalaakaar = models.CharField(max_length=2,choices = Kalakaar,null=True,default='SL')
+    Bussiness_name = models.CharField(max_length=50,null=True)
+    city = models.CharField(null=True,max_length=50)
+    Pincode = models.IntegerField(null=True)
     date_of_birth = models.DateField(null=True)
     is_agreed = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
@@ -82,4 +97,4 @@ class MyUser(AbstractBaseUser):
 
 class Profile(models.Model):
     user = models.OneToOneField(MyUser,on_delete=models.CASCADE)
-    phone_number = models.CharField(validators=[phone_regex],max_length=17,unique=True)
+    phone_number = models.CharField(validators=[phone_regex],max_length=10,unique=True)

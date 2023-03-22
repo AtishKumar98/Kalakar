@@ -13,14 +13,32 @@ def email_exists(value):
         raise forms.ValidationError("Profile with same email Already exists")
 
     
-
+Kalakaar = (
+        ("SL", 'Select a kalaakaar'),
+        ("CR", 'Choreographer'),
+        ("SR", 'Singer'),
+        ("TA", 'Tatoo Artist'),
+        ("PH", 'Photographer'),
+        ("VH", 'Videographer'),
+ )
 class UserRegistrationForm(UserCreationForm):
     email = forms.EmailField( validators=[email_exists])
     email.widget.attrs['placeholder'] = "Enter Your Email"
+    full_name = forms.CharField()
+    full_name.widget.attrs['placeholder'] = "Enter Your Fullname"
+    choose_a_kalaakaar = forms.ChoiceField(choices = Kalakaar)
+    choose_a_kalaakaar.widget.attrs['placeholder'] = "Select a kalaar"
+    Bussiness_name = forms.CharField()
+    Bussiness_name.widget.attrs['placeholder'] = "Enter Your Business(if any)"
+    city = forms.CharField()
+    city.widget.attrs['placeholder'] = "Enter Your City"
+    Pincode = forms.IntegerField()
+    Pincode.widget.attrs['placeholder'] = "Enter Pincode"
+    
 
     class Meta:
         model = MyUser
-        fields = ['email', 'password1', 'password2', 'is_agreed']
+        fields = ['email', 'password1', 'password2', 'is_agreed' , 'full_name', 'choose_a_kalaakaar', 'Bussiness_name','city','Pincode' ]
         widgets = {
             'username': forms.TextInput(attrs={'placeholder': 'Enter Your Username'}),
         }

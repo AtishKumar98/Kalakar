@@ -45,25 +45,25 @@
         justify-content: center;
         align-items: center;
         height: 100vh;
-        background-color: aliceblue;
+        background-color: white;
       }
       .reg_card{
-        height: 70%;
+        height: 75%;
         width: 80%;
         border-radius: 15px;
         font-size: 100%;
-        border: 1px solid rgb(240, 110, 190);
+        /* border: 4px solid rgb(240, 110, 190); */
         padding: 5%;
-      margin-top: 20%;
+        box-shadow: rgba(221, 156, 200, 0.779) 0px 5px 15px 0px;
       }
       .reg_card h1{
-        font-size: 150%;
-        font-weight: 500;
+        font-size: 200%;
+        font-weight: 600;
         font-family: 'Poppins', sans-serif;
       }
       .subtitle{
         font-size: 150%;
-        font-weight: 500;
+        font-weight: 00;
         font-family: 'Poppins', sans-serif;
       }
       .title{
@@ -77,15 +77,47 @@
         width: 95%;
         position: relative;
         margin-left: -3%;
-        margin-top: 4%;
         transition: all 0.3s ease;
       }
    
 
-    
+    .main_logo{
+      display: flex;
+      flex-direction: row;
+      padding: 9%;
+
+    }
 
       .reg_title_logo{
         color: rgb(240, 110, 190);
+        width: 25%;
+      }
+
+     
+      .reg_title{
+        color: rgb(240, 110, 190);
+        display: flex;
+        font-size: 180%;
+        font-family: 'Poppins', sans-serif;
+        justify-content: center;
+        align-items: center;
+        margin-top: 2%;
+      }
+      .reg_title b{
+        margin-right: 5px;
+        text-transform: uppercase;
+        font-weight: 900;
+      }
+      .reg_title p {
+        color: black;
+        font-weight: 700;
+        font-size: 80%;
+        margin-top: 1%;
+        font-style: italic;
+      }
+      .reg_title_logo img{
+        width: 100%;
+        height: auto;
       }
 
       .main {
@@ -123,7 +155,7 @@
         /* Specify the background color to be
         shown when checkbox is active */
         .main input:active ~ .geekmark {
-            background-color: rgb(240, 110, 190)red;
+            background-color: rgb(240, 110, 190);
         }
           
         /* Specify the background color to be
@@ -160,6 +192,13 @@
             -ms-transform: rotate(45deg);
             transform: rotate(45deg);
         }
+        #id_Pincode{
+        width: 49%;
+        margin-left: 2%;
+      }
+      #id_city{
+        width:49%;
+      }
     </style>
   </head>
   <body>
@@ -170,8 +209,15 @@
   <div class="title">Launching Soon</div>
 </div>
 <div class="registration_div">
-  <div class="reg_title_logo">Kalakar Bussines</div>
-  <div class="reg_title">Register Now</div>
+  <div class="main_logo">
+  <div class="reg_title_logo"><img src = '../static/images/Business-logo.png'></div>
+  <div class="reg_title">
+    <div class="Kbus">
+      <b>Kalaakaar</b>forBussines<br><p>Registrations Open!</p>
+    </div>
+
+    </div>
+</div>
   <div class="card reg_card">
     <h1>Registration</h1>
     <!-- <form method = 'POST' class="row g-3 m-2 mx-4" novalidate>{% csrf_token %}
@@ -193,8 +239,20 @@
       
       <span class ='text-danger'>{{f.errors}}</span>
       
+      {{fm.full_name|addcss:'form-control'  }}
+      {{fm.full_name.errors}}
       {{fm.email|addcss:'form-control'  }}
       {{fm.email.errors}}
+      {{fm.choose_a_kalaakaar|addcss:'form-control'  }}
+      {{fm.choose_a_kalaakaar.errors}}
+      {{fm.Bussiness_name|addcss:'form-control'  }}
+      {{fm.Bussiness_name.errors}}
+      {{fm.city|addcss:'form-control'  }}
+      {{fm.city.errors}}
+      {{fm.Pincode|addcss:'form-control'  }}
+      {{fm.Pincode.errors}}
+      {{up.phone_number|addcss:'form-control' }}
+      {{up.phone_number.errors}} 
       {{fm.password1|addcss:'form-control'  }}
       {{fm.password1.errors}}
       {{fm.password2|addcss:'form-control'  }}
@@ -202,8 +260,7 @@
       <!-- {{fm.date_of_birth}} -->
       {{fm.errors}}
       <!-- <label>{{up.phone_number.label }}</label><br><br> -->
-      {{up.phone_number|addcss:'form-control' }}
-      <span class ='text-danger'>{{up.phone_number.errors}}</span>
+      
       
     <label class="main">I Agree on <a href='' style="color:rgb(240, 110, 190)" >  Terms & condition</a> Provided By Kalakaar
       {{fm.is_agreed}}
@@ -251,3 +308,9 @@ date.datepicker({
     -->
   </body>
 </html>
+
+<!-- Email Addition -->
+<!-- OTP CONTAINWER -->
+<!-- thin Border  -->
+<!-- Box shadow -->
+<!-- Final Screen -->
