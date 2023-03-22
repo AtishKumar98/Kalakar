@@ -12,7 +12,7 @@ import random
 from django.conf import settings
 from django.contrib.auth.hashers import make_password, check_password
 import requests
-import pyrebase
+# import pyrebase
 
 import firebase_admin
 from firebase_admin import credentials
