@@ -91,10 +91,32 @@ WSGI_APPLICATION = 'Kalaakaar.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'database_2023_8.sqlite3',
+#     }
+# }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'postgres',
+#         'USER': 'postgres',
+#         'PASSWORD': 'LetMeIn1',
+#         'HOST':' pranay.cigcvjkafac4.ap-south-1.rds.amazonaws.com',
+#         'PORT':'5432',
+#     }
+# }
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'database_2023_8.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'Kalaakaar',
+        'USER': 'postgres',
+        'PASSWORD': 'Passw0rd',
+        'HOST':'localhost',
+        'PORT':'5433',
     }
 }
 
