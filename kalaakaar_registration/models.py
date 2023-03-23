@@ -53,7 +53,6 @@ class MyUser(AbstractBaseUser):
  
 
     Kalakaar = [
-        ("SL", 'Select A kalaakaar'),
         ("CR", 'Choreographer'),
         ("SR", 'Singer'),
         ("TA", 'Tatoo Artist'),
@@ -61,7 +60,7 @@ class MyUser(AbstractBaseUser):
         ("VH", 'Videographer'),
     ]
     full_name = models.CharField(null=True,max_length=50)
-    choose_a_kalaakaar = models.CharField(max_length=2,choices = Kalakaar,null=True,default='SL')
+    choose_a_kalaakaar = models.CharField(max_length=2, default='SL', choices = Kalakaar,null=True)
     Bussiness_name = models.CharField(max_length=50,null=True)
     city = models.CharField(null=True,max_length=50)
     Pincode = models.IntegerField(null=True)

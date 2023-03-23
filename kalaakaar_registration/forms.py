@@ -13,7 +13,7 @@ def email_exists(value):
 
     
 Kalakaar = (
-        ("SL", 'Select a kalaakaar'),
+        ("SL", "Select a Kalaakaar"),
         ("CR", 'Choreographer'),
         ("SR", 'Singer'),
         ("TA", 'Tatoo Artist'),
@@ -46,6 +46,8 @@ class UserRegistrationForm(UserCreationForm):
         super(UserRegistrationForm, self).__init__(*args, **kwargs)
         self.fields['password1'].widget = forms.PasswordInput(attrs={'placeholder': ("Enter Your Password")})
         self.fields['password2'].widget = forms.PasswordInput(attrs={'placeholder': ("Confirm Your Password")})
+        self.fields['Bussiness_name'].required = False
+        self.fields['choose_a_kalaakaar'].required = True
         # self.fields['date_of_birth'] = forms.DateField()
 
 
