@@ -13,7 +13,7 @@ def email_exists(value):
 
     
 Kalakaar = (
-        ("SL", "Select a Kalaakaar"),
+        ("Select a kalaakaar", 'Select a kalaakaar'),
         ("CR", 'Choreographer'),
         ("SR", 'Singer'),
         ("TA", 'Tatoo Artist'),
@@ -30,9 +30,9 @@ class UserRegistrationForm(UserCreationForm):
     Bussiness_name = forms.CharField()
     Bussiness_name.widget.attrs['placeholder'] = "Enter Your Business(if any)"
     city = forms.CharField()
-    city.widget.attrs['placeholder'] = "Enter Your City"
+    city.widget.attrs['placeholder'] = "City"
     Pincode = forms.IntegerField()
-    Pincode.widget.attrs['placeholder'] = "Enter Pincode"
+    Pincode.widget.attrs['placeholder'] = "Pincode"
     
 
     class Meta:
@@ -47,7 +47,6 @@ class UserRegistrationForm(UserCreationForm):
         self.fields['password1'].widget = forms.PasswordInput(attrs={'placeholder': ("Enter Your Password")})
         self.fields['password2'].widget = forms.PasswordInput(attrs={'placeholder': ("Confirm Your Password")})
         self.fields['Bussiness_name'].required = False
-        self.fields['choose_a_kalaakaar'].required = True
         # self.fields['date_of_birth'] = forms.DateField()
 
 
