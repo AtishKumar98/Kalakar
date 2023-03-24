@@ -13,15 +13,27 @@
       @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
       
       
+     
+     .form-control
       
+     border: none;
+      
+      {
+      {% if fm.errors %}
+        border: 2px solid  red;
+      {% endif %} 
+      }  
+      
+
       .main_section{
-        {% if  fm.errors %}
+        {% if fm.errors %}
         height: 100%;
         {% else %}
         height: 100vh;
         {% endif %}
        
         display: flex;
+        background-color: rgb(240, 110, 190);
         justify-content: center;
         align-items: center;
         flex-direction: row;
@@ -308,7 +320,7 @@
    
 <section class = 'main_section'>
 <div class="slogan_div">
-  <div class="subtitle"><i>India's Own Artist Perform</i></div>
+  <div class="subtitle"><i>India's Own Artist Platform</i></div>
   <div class="title">Launching Soon</div>
 </div>
 <div class="registration_div">
@@ -340,8 +352,6 @@
       {% load myfilters %}
       <!-- <label for="exampleFormControlInput1" cl  ass="form-label">{{f.label}}</label><br><br> -->
       
-      <span class ='text-danger'>{{f.errors}}</span>
-      
       {{fm.full_name|addcss:'form-control'  }}
       {{fm.full_name.errors}}
       {{fm.email|addcss:'form-control'  }}
@@ -366,7 +376,7 @@
       <!-- <label>{{up.phone_number.label }}</label><br><br> -->
       
       
-    <label class="main">I Agree on <a href='' style="color:rgb(240, 110, 190)" > Terms & condition</a> Provided By Kalakaar
+    <label class="main">I Agree on <a href='' style="color:rgb(240, 110, 190)" > Terms & condition</a> Provided By Kalaakaar
       {{fm.is_agreed}}
         <span class="geekmark"></span>
     </label>

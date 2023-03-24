@@ -13,7 +13,7 @@ def email_exists(value):
 
     
 Kalakaar = (
-        ("Select a kalaakaar", 'Select a kalaakaar'),
+        ("kalaakaari", 'Choose kalaakaari'),
         ("CR", 'Choreographer'),
         ("SR", 'Singer'),
         ("TA", 'Tatoo Artist'),
