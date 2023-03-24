@@ -111,8 +111,8 @@ def Registration(request):
             p_number = up.cleaned_data['phone_number']
             request.session['number'] = p_number
             otp = random.randint(100000,999999)
-            print(otp)
-            print(p_number)
+            # print(otp)
+            # print(p_number)
             request.session['otp'] = otp
             message = f"Your Registration OTP for Kalakar is {otp}"
             send_OTP(p_number,message)
