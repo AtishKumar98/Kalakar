@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
+    {% load static %}
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,7 +9,8 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <title>KALAKAR</title>
+    <link rel="icon" type="image/png" href="{% static 'images/Business-logo.png'%}" />
+    <title>KALAAKAAR</title>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
       .main_section{
@@ -37,17 +39,19 @@
         background-color: aliceblue;
       }
       .reg_card{
-        height: 30%;
+        height: 40%;
         width: 80%;
         border-radius: 15px;
         font-size: 100%;
-        border: 1px solid rgb(240, 110, 190);
+        border: none;
         padding: 5%;
       margin-top: 20%;
+      box-shadow: rgba(221, 156, 200, 0.779) 0px 5px 15px 0px;
       }
       .reg_card h1{
         font-size: 150%;
         font-weight: 500;
+        margin-bottom: 15%;
         font-family: 'Poppins', sans-serif;
       }
       .subtitle{
@@ -207,7 +211,7 @@ margin-top: 3%;
 
 <section class = 'main_section'>
 <div class="slogan_div">
-  <div class="subtitle"><i>India's Own Artist Perform</i></div>
+  <div class="subtitle"><i>India's Own Artist Platform</i></div>
   <div class="title">Launching Soon</div>
 </div>
 <div class="registration_div">
@@ -216,26 +220,30 @@ margin-top: 3%;
     <div class="reg_title_logo"><img src = '{% static "images/Business-logo.png" %}'></div>
     <div class="reg_title">
       <div class="Kbus">
-        <b>Kalaakaar</b>forBussines<br><p>Registrations Open!</p>
+        <b>Kalaakaar</b>forBusiness<br><p>Registrations Open!</p>
       </div>
   
       </div>
   </div>
   
   <div class="card reg_card">
+
    {% for message in messages %}
 <div class="container-fluid p-0">
   <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
       <!-- <span aria-hidden="True">&times;</span> -->
     </button>
+
     {{ message }}
     {% if kk %}
    
     {% endif %}
   </div>
+  
 </div>
 {% endfor %}
+
     <h1> <i class='bx bx-arrow-back'></i> Verification</h1>
     <!-- <form method = 'POST' class="row g-3 m-2 mx-4" novalidate>{% csrf_token %}
       <input class="form-control" type="text" placeholder="Enter Your Full Name" aria-label=".form-control-lg example">
@@ -248,6 +256,13 @@ margin-top: 3%;
       <input class="form-control" type="text" placeholder="Confirm Your Password" aria-label=".form-control-lg example">
       <button type="submit" class="btn btn-dark" name="registration">Register</button>
     </form> -->
+    <center>
+
+      <p>
+        We have sent a verification code to <br> 
+        <b>+91 {{p_number}}</b>
+      </p>
+    </center>
     <form method = 'POST' class="row g-3 m-3" novalidate>{% csrf_token %}
       <div class="card-body">
         <center>

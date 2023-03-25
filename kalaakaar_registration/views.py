@@ -82,7 +82,9 @@ def send_OTP(number, message):
 
 
 # Create your views here.
+
 def Registration(request):
+   
     # channel_name = database.child('Data').child('Minion').get().val()
     # channel_type = database.child('Data').child('Bor').get().val()
     if request.method == 'POST' and 'registration' in request.POST:
@@ -136,6 +138,7 @@ def Registration(request):
 
 
 def OTPRegistration(request):
+    p_number = request.session.get('number')
     if request.method == 'POST' and 'otp-registration' in request.POST:
         u_otp = request.POST['otp']
         otp = request.session.get('otp')
@@ -165,7 +168,7 @@ def OTPRegistration(request):
                 'Email':email_address,
                 'Password':hashed_pwd,
                 'Agreed':ag,
-                'Phone Number':p_number,
+                'Phone_Number':p_number,
             }
             doc_reference = db.collection(u'Users').document(fms3['Email'])
                 #  db.collection(u'Users').add(fms)
@@ -176,12 +179,13 @@ def OTPRegistration(request):
             messages.success(request,'Registration Done!')
             # fms = MyUser.objects.values()
             print(fl,'#######$$$$$$$$')
-            context = {'fl':fl,}
+            print(p_number,'NUMBERRR')
+            context = {'fl':fl}
             return redirect('/login/',context)
         else:
             messages.error(request, 'Wrong OTP Try Again')
-
-    return render (request, 'OTP_reg.html',)
+    content = {'p_number':p_number}
+    return render (request, 'OTP_reg.html',content)
 
 
 def UserLogin ( request ) :
