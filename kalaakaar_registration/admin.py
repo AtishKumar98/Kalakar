@@ -5,7 +5,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
 
-from .models import MyUser
+from .models import *
 
 
 class UserCreationForm(forms.ModelForm):
@@ -59,7 +59,7 @@ class UserAdmin(BaseUserAdmin):
     list_filter = ('is_admin',)
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('date_of_birth','Bussiness_name','city','Pincode','full_name')}),
+        ('Personal info', {'fields': ('date_of_birth','Bussiness_name','city','Pincode','full_name','Phone_number','choose_a_kalaakaar')}),
         ('Permissions', {'fields': ('is_admin','is_agreed')}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
@@ -77,6 +77,7 @@ class UserAdmin(BaseUserAdmin):
 
 # Now register the new UserAdmin...
 admin.site.register(MyUser, UserAdmin)
+# admin.site.register(Profile)
 # ... and, since we're not using Django's built-in permissions,
 # unregister the Group model from admin.
 admin.site.unregister(Group)

@@ -28,7 +28,7 @@ class UserRegistrationForm(UserCreationForm):
     choose_a_kalaakaar = forms.ChoiceField(choices = Kalakaar)
     choose_a_kalaakaar.widget.attrs['placeholder'] = "Select a kalaar"
     Bussiness_name = forms.CharField()
-    Bussiness_name.widget.attrs['placeholder'] = "Enter Your Business(if any)"
+    Bussiness_name.widget.attrs['placeholder'] = "Business Name (if any)"
     city = forms.CharField()
     city.widget.attrs['placeholder'] = "City"
     Pincode = forms.IntegerField()

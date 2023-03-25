@@ -64,6 +64,7 @@ class MyUser(AbstractBaseUser):
     Bussiness_name = models.CharField(max_length=50,null=True)
     city = models.CharField(null=True,max_length=50)
     Pincode = models.IntegerField(null=True)
+    Phone_number = models.CharField(null=True,max_length=10)
     date_of_birth = models.DateField(null=True)
     is_agreed = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)

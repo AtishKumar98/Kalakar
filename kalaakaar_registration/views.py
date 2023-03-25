@@ -151,7 +151,7 @@ def OTPRegistration(request):
         pc = request.session.get('Pincode')
         email_address = request.session.get('email')
         if int(u_otp)==otp:
-            MyUser.objects.create(email=email_address,password=hashed_pwd,full_name=fl,is_agreed=ag,choose_a_kalaakaar=ck,Bussiness_name=bn,city=ct,Pincode=pc)
+            MyUser.objects.create(email=email_address,password=hashed_pwd,full_name=fl,is_agreed=ag,choose_a_kalaakaar=ck,Bussiness_name=bn,city=ct,Pincode=pc,Phone_number=p_number)
             user_instance = MyUser.objects.get(email=email_address)
             print(user_instance, '$$$$$$$$$$')
             Profile.objects.create(user=user_instance,phone_number=p_number)
@@ -176,12 +176,12 @@ def OTPRegistration(request):
             messages.success(request,'Registration Done!')
             # fms = MyUser.objects.values()
             print(fl,'#######$$$$$$$$')
-            context = {'fl':fl}
+            context = {'fl':fl,}
             return redirect('/login/',context)
         else:
             messages.error(request, 'Wrong OTP Try Again')
 
-    return render (request, 'OTP_reg.html')
+    return render (request, 'OTP_reg.html',)
 
 
 def UserLogin ( request ) :
