@@ -5,6 +5,6 @@ urlpatterns = [
     # path('',views.home, name= 'home'),
     path('',views.Registration, name= 'Registration'),
     path('registration/OTP/',views.OTPRegistration, name= 'RegistrationOTP'),
-    path('login/',views.UserLogin, name= 'login'),
-    path('login/otp/',views.otpLogin, name= 'otp-login'),
+    path('confirmed_user/',views.confirmation, name= 'login'),
+    # path('login/otp/',views.otpLogin, name= 'otp-login'),
 ]

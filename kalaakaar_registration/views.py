@@ -181,58 +181,33 @@ def OTPRegistration(request):
             print(fl,'#######$$$$$$$$')
             print(p_number,'NUMBERRR')
             context = {'fl':fl}
-            return redirect('/login/',context)
+            return redirect('/confirmed_user/',context)
         else:
             messages.error(request, 'Wrong OTP Try Again')
     content = {'p_number':p_number}
     return render (request, 'OTP_reg.html',content)
 
 
-def UserLogin ( request ) :
+def confirmation ( request ) :
     fl = request.session.get('full_name')
     print('########$$$$$$$$$$')
     print(fl)
-    if request.method == "POST":
-        username = request.POST['user']
-        password = request.POST['password']
-        user =authenticate(request ,username=username,password=password)
-        hashed_pwd = make_password(request.session['password'])
-        p_number = request.session.get('number')
-        ag = request.session.get('is_agreed')
-        fl = request.session.get('full_name')
-        ck = request.session.get('choose_a_kalaakaar')
-        bn = request.session.get('Bussiness_name')
-        ct = request.session.get('city')
-        pc = request.session.get('Pincode')
-        email_address = request.session.get('email')
-        if user is not None :
-             request.session ['username'] = username
-             request.session ['password'] = password
-             u = MyUser.objects.get(username = username) 
-             p = Profile.objects.get(user=u)
-             p_number = p.phone_number
-             otp = random.randint ( 1000 , 9999 )
-             request.session['login_otp'] = otp
-             message =f'your otp is ( {otp})'
-             send_OTP(p_number,message )
-             return redirect('/login/otp/')
-        else :
-             messages.error(request,'username or password is wrong')
-    return render(request ,'login.html', {'fl':fl})
+    context =  {'fl':fl}
+    return render(request ,'login.html',context)
 
-def otpLogin (request):
-    if request.method == 'POST':
-         username = request.session['username']
-         password =  request.session['password']
-         otp =  request.session.get('login_otp')
-         u_otp = request.POST ['otp']
-         if int (u_otp) == otp:
-            user = authenticate(request , username =username , password = password )
-            if user is not None :
-                  login (request,user)
-                  request.session.delete ('login_otp')
-                  messages.success (request,'login successfully')
-                  return redirect ('/')
-            else:
-                  messages.error(request,'Wrong OTP')
-    return render ( request ,'login-otp.html')
+# def otpLogin (request):
+#     if request.method == 'POST':
+#          username = request.session['username']
+#          password =  request.session['password']
+#          otp =  request.session.get('login_otp')
+#          u_otp = request.POST ['otp']
+#          if int (u_otp) == otp:
+#             user = authenticate(request , username =username , password = password )
+#             if user is not None :
+#                   login (request,user)
+#                   request.session.delete ('login_otp')
+#                   messages.success (request,'login successfully')
+#                   return redirect ('/')
+#             else:
+#                   messages.error(request,'Wrong OTP')
+#     return render ( request ,'login-otp.html')
