@@ -1,38 +1,64 @@
 <!doctype html>
 <html lang="en">
+  {% load static %}
+
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/js/intlTelInput.min.js"></script>
+
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/js/utils.min.js"></script> -->
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-{% load static %}
+    <link rel="icon" type="image/png" href="{% static 'images/Business-logo.png'%}" />
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <!-- <link rel="stylesheet" href="../static/css/login-flip.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>    <!-- <link rel="stylesheet" href="../static/css/intlTelInput.css"> -->
+    <!-- <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' rel='stylesheet' type='text/css'> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/css/intlTelInput.min.css" />
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="icon" type="image/png" href="{% static 'images/Business-logo.png'%}" />
-    <title>KALAAKAAR</title>
+    
+    <title>Kalaakaar</title>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+      
+        
+   
+
       .main_section{
+        height: 100%;
         height: 100vh;
-        background-color: rgb(240, 110, 190);
         display: flex;
+        background-color: rgb(240, 110, 190);
+        justify-content: center;
+        align-items: center;
         flex-direction: row;
       }
+      /* .boolean :hover input .form-check-input {
+            background-color: yellow;
+        } */
 
+      
+
+      .boolean{
+        display: flex;
+        flex-direction: row;
+
+      }
+     
       .slogan_div{
         width: 70%;
-        height: 100vh;
+        height: 100%;
         display: flex;
+        background-color: rgb(240, 110, 190);
         justify-content: center;
         align-items: center;
         color: white; 
         flex-direction: column;
-      }
-      .quote{
-        margin-bottom: 10%;
-        font-size: 120%;
-        font-weight: 500;
-        color:rgb(240, 110, 190);
       }
       .registration_div{
         width: 30%;
@@ -40,40 +66,38 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        height: 100vh;
+        height: 100%;
         background-color: white;
       }
       .reg_card{
-        height: 60%;
+       
+
+        height: 50%;
+       
         width: 80%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
         border-radius: 15px;
         font-size: 100%;
-        box-shadow: rgba(221, 156, 200, 0.779) 0px 5px 15px 0px;
+        /* border: 4px solid rgb(240, 110, 190); */
         padding: 5%;
-        margin-top: 5%;
+        box-shadow: rgba(221, 156, 200, 0.779) 0px 5px 15px 0px;
+      }
+      #id_choose_a_kalaakaar{
+        color:rgb(240, 110, 190);
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        border: none;
+      }
+      .errorlist li {
+        color: red;
+        font-size: 100%;
       }
       .reg_card h1{
         font-size: 150%;
         font-weight: 600;
-        display: flex;
-        justify-content: center;
-        font-family: 'Poppins', sans-serif;
-      }
-      .reg_card p{
-        font-size: 100%;
-        font-weight: 600;
-        text-align: center;
-        display: flex;
-        margin-top: 5%;
-        justify-content: center;
         font-family: 'Poppins', sans-serif;
       }
       .subtitle{
         font-size: 150%;
-        font-weight: 500;
+        font-weight: 00;
         font-family: 'Poppins', sans-serif;
       }
       .title{
@@ -84,17 +108,19 @@
         text-transform: uppercase;
       }
       .btn{
-        width: 80%;
-        margin-left: -3%;
-        margin-top: 4%;
+        width: 100%;
+        position: relative;
+        transition: all 0.3s ease;
       }
+   
 
-      .main_logo{
+    .main_logo{
       display: flex;
       flex-direction: row;
       padding: 9%;
 
     }
+
       .reg_title_logo{
         color: rgb(240, 110, 190);
         width: 25%;
@@ -126,101 +152,218 @@
         width: 100%;
         height: auto;
       }
+
+      .main {
+            display: block;
+            position: relative;
+            padding-left: 45px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            font-size: 80%;
+        }
+          
+        /* Hide the default checkbox */
+        input[type=checkbox] {
+            visibility: hidden;
+        }
+          
+        /* Creating a custom checkbox
+        based on demand */
+        .geekmark {
+            position: absolute;
+            top: 0;
+            left: 2%;
+            height: 55%;
+            width: 6.5%;
+            background-color: white;
+            border: 0.5px solid rgb(240, 110, 190);
+        }
+          
+        /* Specify the background color to be
+        shown when hovering over checkbox */
+        .main:hover input ~ .geekmark {
+            background-color: rgb(240, 110, 190);
+        }
+          
+        /* Specify the background color to be
+        shown when checkbox is active */
+        .main input:active ~ .geekmark {
+            background-color: rgb(240, 110, 190);
+        }
+          
+        /* Specify the background color to be
+        shown when checkbox is checked */
+        .main input:checked ~ .geekmark {
+            background-color: rgb(240, 110, 190);
+        }
+          
+        /* Checkmark to be shown in checkbox */
+        /* It is not be shown when not checked */
+        .geekmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+          
+        /* Display checkmark when checked */
+        .main input:checked ~ .geekmark:after {
+            display: block;
+        }
+          
+        /* Styling the checkmark using webkit */
+        /* Rotated the rectangle by 45 degree and 
+        showing only two border to make it look
+        like a tickmark */
+        .main .geekmark:after {
+            left: 8px;
+            bottom: 5px;
+            width: 7px;
+            height: 60%;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
+        #id_Pincode{
+        width: 49%;
+        margin-left: 2%;
+      }
+      #id_city{
+        width:49%;
+      }
+/* #id_phone_number{
+  width: 104%;
+  margin-left: -2%;
+} */
       @media only screen and (max-width: 600px) {
  
- .slogan_div{
- width: 100%;
- height: 20%;
- display: flex;
- justify-content: center;
- align-items: center;
- color: white; 
- flex-direction: column;
-}
-.registration_div{
- width: 100%;
- display: flex;
- flex-direction: column;
- justify-content: center;
- align-items: center;
- height: 85%;
- background-color: white;
-}
-.main_section{
- {% if  fm.errors %}
- height: 100%;
- {% else %}
- height: 100vh;
- {% endif %}
- display: flex;
- justify-content: center;
- align-items: center;
- flex-direction: column;
-}
+        .slogan_div{
+        width: 100%;
+        height: 20%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white; 
+        flex-direction: column;
+      }
+      .registration_div{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 85%;
+        background-color: white;
+      }
+      .main_section{
 
-.subtitle{
- font-size: 90%;
- font-weight: 00;
- font-family: 'Poppins', sans-serif;
-}
-.title{
- font-size: 148%;
- font-family: 'Poppins', sans-serif;
- font-weight: 600;
- letter-spacing: 3px;
- text-transform: uppercase;
-}
-.reg_title {
-color: rgb(240, 110, 190);
-display: flex;
-font-size: 130%;
-font-family: 'Poppins', sans-serif;
-justify-content: center;
-align-items: center;
-margin-top: 2%;
+        height: 100%;
+      
+        height: 100vh;
+      
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      .subtitle{
+        font-size: 90%;
+        font-weight: 00;
+        font-family: 'Poppins', sans-serif;
+      }
+      .title{
+        font-size: 148%;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+      }
+      .reg_title {
+    color: rgb(240, 110, 190);
+    display: flex;
+    font-size: 130%;
+    font-family: 'Poppins', sans-serif;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2%;
 }
 .reg_title_logo {
-color: rgb(240, 110, 190);
-width: 24%;
+    color: rgb(240, 110, 190);
+    width: 24%;
 }
 .main .geekmark:after {
-left: 3px;
-bottom: 5px;
-width: 9px;
-height: 60%;
-border: solid white;
-border-width: 0 3px 3px 0;
--webkit-transform: rotate(45deg);
--ms-transform: rotate(45deg);
-transform: rotate(45deg);
-}
-.quote{
-  font-size: 96%;
+    left: 3px;
+    bottom: 5px;
+    width: 9px;
+    height: 60%;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
 }
 .reg_card {
-height: 54%;
-width: 90%;
-border-radius: 15px;
-font-size: 100%;
-/* border: 4px solid rgb(240, 110, 190); */
-padding: 5%;
-margin-bottom:51% ;
-box-shadow: rgba(221, 156, 200, 0.779) 0px 5px 15px 0px;
+    height: 100%;
+    width: 90%;
+    border-radius: 15px;
+    font-size: 100%;
+    /* border: 4px solid rgb(240, 110, 190); */
+    padding: 5%;
+    box-shadow: rgba(221, 156, 200, 0.779) 0px 5px 15px 0px;
 }
 .main_logo {
-display: flex;
-flex-direction: row;
-padding: 8%;
-margin-top: 3%;
+    display: flex;
+    flex-direction: row;
+    padding: 8%;
+    margin-top: 25%;
 
 }
 
 .reg_card h1{
- font-size: 130%;
- font-weight: 600;
- font-family: 'Poppins', sans-serif;
-}
-}
+        font-size: 130%;
+        font-weight: 600;
+        font-family: 'Poppins', sans-serif;
+      }
+      }
+
+/* Laptop */
+@media (max-width:1400px)  and (min-width: 1000px)
+	{
+    .main_section{
+       height: 100%;
+   }  
+   .geekmark {
+            position: absolute;
+            top: 0;
+            left: 2%;
+            height: 55%;
+            width: 10%;
+            background-color: white;
+            border: 0.5px solid rgb(240, 110, 190);
+        }
+        .reg_title_logo{
+        color: rgb(240, 110, 190);
+        width: 25%;
+      }
+
+     
+      .reg_title{
+        color: rgb(240, 110, 190);
+        display: flex;
+        font-size: 135%;
+        font-family: 'Poppins', sans-serif;
+        justify-content: center;
+        align-items: center;
+        margin-top: 2%;
+      }
+      .reg_card h1{
+        font-size: 120%;
+        font-weight: 600;
+        font-family: 'Poppins', sans-serif;
+      }
+      }
     </style>
   </head>
   <body>
@@ -232,35 +375,97 @@ margin-top: 3%;
 </div>
 <div class="registration_div">
   <div class="main_logo">
-    <div class="reg_title_logo"><img src = '../static/images/Business-logo.png'></div>
-    <div class="reg_title">
-      <div class="Kbus">
-        <b>Kalaakaar</b>forBusiness<br><p>Registrations Open!</p>
-      </div>
-  
-      </div>
-  </div>
-  <div class="card reg_card">
-    <div class="quote">
-      <i class='bx bxs-check-circle'></i> The most difficult step is the initial one.
+  <div class="reg_title_logo"><img src = '{% static "images/Business-logo.png"%}'></div>
+  <div class="reg_title">
+    <div class="Kbus">
+      <b>Kalaakaar</b>forBusiness<br><p>Registrations Open!</p>
     </div>
-    <h1> 
-        Congrats {{fl}},
-      
-    </h1>
-      <h1>
-        Registration Complete
-      </h1>
-      <p>You'll be notified as we launch our app ,</br>
-      Thanks For Choosing Our Platform.</p>
-        
-          <a href ='/' type="submit" id='btn' class="btn btn-dark" name="registration">Back To Home</a>
-       
-  </div>
 
+    </div>
+</div>
+  <div class="card reg_card">
+    <h1>Login</h1>
+    <!-- <form method = 'POST' class="row g-3 m-2 mx-4" novalidate>{% csrf_token %}
+      <input class="form-control" type="text" placeholder="Enter Your Full Name" aria-label=".form-control-lg example">
+      <input class="form-control" type="text" placeholder="Choose Kalakar" aria-label=".form-control-lg example">
+      <input class="form-control" type="text" placeholder="Enter Business Name" aria-label=".form-control-lg example">
+      <input class="form-control" type="text" placeholder="Enter Your City" aria-label=".form-control-lg example">
+      <input class="form-control" type="text" placeholder="Enter Pincode" aria-label=".form-control-lg example">
+      <input class="form-control" type="text" placeholder="Enter Phone Number" aria-label=".form-control-lg example">
+      <input class="form-control" type="text" placeholder="Enter Your Password" aria-label=".form-control-lg example">
+      <input class="form-control" type="text" placeholder="Confirm Your Password" aria-label=".form-control-lg example">
+      <button type="submit" class="btn btn-dark" name="registration">Register</button>
+    </form> -->
+    <form method = 'POST' class="row g-3 m-2 mx-2 mt-4" novalidate>{% csrf_token %}
+      
+      <div class="input-group"style="">
+        <div class="input-group-text bg-light" style = "color:rgb(240, 110, 190)"><i class="fas fa-envelope"></i></div>
+        <input type="text" class="form-control" name="email" id="autoSizingInputGroup" placeholder="Email">
+      </div>
+      <div class="input-group">
+        <div class="input-group-text bg-light" style="color:rgb(240, 110, 190)"><i class="fas fa-lock"></i></div>
+        <input type="password" class="form-control" name="password" id="autoSizingInputGroup" placeholder="Paswword">
+      </div>
+       <br>
+        <div class="text"><a href="/reset_password">Forgot password?</a></div>
+        <div class="col-12" style="display: flex;justify-content: center;align-items: center;">
+          <button type="submit"id ='btn' class="btn btn-dark" name="form1">Login</button>
+        </div>
+        <br>
+         
+        {% for message in messages %}
+        <div class="container-fluid p-0">
+          <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+              <!-- <span aria-hidden="True">&times;</span> -->
+            </button>
+        
+            {{ message }}
+            {% if kk %}
+           
+            {% endif %}
+          </div>
+          
+        </div>
+        {% endfor %}
+  
+        <div class="text sign-up-text">Don't have an account? <label for="flip">Sigup now</label></div>
+      </div>
+    </form>
+  </div>
 </div>
 </section>
   
+<script>
+
+var checker = document.getElementById('id_is_agreed');
+var sendbtn = document.getElementById('btn');
+ // when unchecked or checked, run the function
+ checker.onchange = function(){
+if(this.checked){
+    sendbtn.disabled = false;
+} else {
+    sendbtn.disabled = true;
+}
+
+}
+</script>
+<!-- <script src="../static/js/intlTelInput.js"></script> -->
+<script>
+
+// var input = document.querySelector("#id_phone_number");
+//     intlTelInput(input, {
+//       initialCountry: "auto",
+//       geoIpLookup: function (success, failure) {
+//       {
+//           var countryCode = 'in';
+//           success('in');
+//         };
+//       },
+//     });
+
+</script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
 
     <!-- Optional JavaScript; choose one of the two! -->
 
@@ -274,3 +479,9 @@ margin-top: 3%;
     -->
   </body>
 </html>
+
+<!-- Email Addition -->
+<!-- OTP CONTAINWER -->
+<!-- thin Border  -->
+<!-- Box shadow -->
+<!-- Final Screen -->

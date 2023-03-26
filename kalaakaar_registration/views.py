@@ -214,26 +214,38 @@ def confirmation ( request ) :
 #     return render ( request ,'login-otp.html')
 
 
-# @login_required(login_url='/login/')
-# def logoutUser(request):
-#     logout(request)
-#     return redirect('/login/')
+@login_required(login_url='/login/')
+def logoutUser(request):
+    logout(request)
+    return redirect('/login/')
 
 
 
 
 
-# def loginpage(request):
-#     if request.method == "POST" and 'form1' in request.POST:
-#         username = request.POST.get('username')
-#         password = request.POST.get('password')
-#         user = authenticate(request, username=username, password=password)
-#         if user is not None:
-#             login(request, user)
-#             request.session.set_expiry(5000)
-#             return redirect('/home/')
-#         else:
-#             messages.error(request, 'INCORRECT USERNAME OR PASSWORD! TRY AGAIN')
+def loginpage(request):
+    if request.method == "POST" and 'form1' in request.POST:
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        user = authenticate(request, email=email, password=password)
+        if user is not None:
+            login(request, user)
+            request.session.set_expiry(5000)
+            return redirect('/home/')
+        else:
+            messages.error(request, 'INCORRECT EMAIL OR PASSWORD! TRY AGAIN')
+    
+    context = {}
+
+    return render(request, 'login.html', context)
+
+
+@login_required(login_url='/login/')
+def home(request):
+    context = {}
+    return render (request, 'home.html', context)
+
+
 
 
 def privacy_policy(request):
