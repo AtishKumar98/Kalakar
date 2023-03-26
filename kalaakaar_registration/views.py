@@ -5,8 +5,9 @@ from .forms import *
 from django.contrib import messages
 # from django.contrib.auth.models import User
 from .models import MyUser
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login , logout
 from .models import Profile
+from django.contrib.auth.decorators import login_required
 import json
 import random 
 from django.conf import settings
@@ -193,7 +194,7 @@ def confirmation ( request ) :
     print('########$$$$$$$$$$')
     print(fl)
     context =  {'fl':fl}
-    return render(request ,'login.html',context)
+    return render(request ,'confirmed_user.html',context)
 
 # def otpLogin (request):
 #     if request.method == 'POST':
@@ -211,3 +212,30 @@ def confirmation ( request ) :
 #             else:
 #                   messages.error(request,'Wrong OTP')
 #     return render ( request ,'login-otp.html')
+
+
+# @login_required(login_url='/login/')
+# def logoutUser(request):
+#     logout(request)
+#     return redirect('/login/')
+
+
+
+
+
+# def loginpage(request):
+#     if request.method == "POST" and 'form1' in request.POST:
+#         username = request.POST.get('username')
+#         password = request.POST.get('password')
+#         user = authenticate(request, username=username, password=password)
+#         if user is not None:
+#             login(request, user)
+#             request.session.set_expiry(5000)
+#             return redirect('/home/')
+#         else:
+#             messages.error(request, 'INCORRECT USERNAME OR PASSWORD! TRY AGAIN')
+
+
+def privacy_policy(request):
+    context = {}
+    return render (request, 'privacy_policy.html', context)

@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+{% load static %}
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" type="image/png" href="{% static 'images/Business-logo.png'%}" />
+    <title>KALAAKAAR</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+      .main_section{
+        height: 100vh;
+        background-color: rgb(240, 110, 190);
+        display: flex;
+        flex-direction: row;
+      }
+
+      .slogan_div{
+        width: 70%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white; 
+        flex-direction: column;
+      }
+      .quote{
+        margin-bottom: 10%;
+        font-size: 120%;
+        font-weight: 500;
+        color:rgb(240, 110, 190);
+      }
+      .registration_div{
+        width: 30%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: white;
+      }
+      .reg_card{
+        height: 60%;
+        width: 80%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 15px;
+        font-size: 100%;
+        box-shadow: rgba(221, 156, 200, 0.779) 0px 5px 15px 0px;
+        padding: 5%;
+        margin-top: 5%;
+      }
+      .reg_card h1{
+        font-size: 150%;
+        font-weight: 600;
+        display: flex;
+        justify-content: center;
+        font-family: 'Poppins', sans-serif;
+      }
+      .reg_card p{
+        font-size: 100%;
+        font-weight: 600;
+        text-align: center;
+        display: flex;
+        margin-top: 5%;
+        justify-content: center;
+        font-family: 'Poppins', sans-serif;
+      }
+      .subtitle{
+        font-size: 150%;
+        font-weight: 500;
+        font-family: 'Poppins', sans-serif;
+      }
+      .title{
+        font-size: 450%;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+      }
+      .btn{
+        width: 80%;
+        margin-left: -3%;
+        margin-top: 4%;
+      }
+
+      .main_logo{
+      display: flex;
+      flex-direction: row;
+      padding: 9%;
+
+    }
+      .reg_title_logo{
+        color: rgb(240, 110, 190);
+        width: 25%;
+      }
+
+     
+      .reg_title{
+        color: rgb(240, 110, 190);
+        display: flex;
+        font-size: 180%;
+        font-family: 'Poppins', sans-serif;
+        justify-content: center;
+        align-items: center;
+        margin-top: 2%;
+      }
+      .reg_title b{
+        margin-right: 5px;
+        text-transform: uppercase;
+        font-weight: 900;
+      }
+      .reg_title p {
+        color: black;
+        font-weight: 700;
+        font-size: 80%;
+        margin-top: 1%;
+        font-style: italic;
+      }
+      .reg_title_logo img{
+        width: 100%;
+        height: auto;
+      }
+      @media only screen and (max-width: 600px) {
+ 
+ .slogan_div{
+ width: 100%;
+ height: 20%;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ color: white; 
+ flex-direction: column;
+}
+.registration_div{
+ width: 100%;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+ height: 85%;
+ background-color: white;
+}
+.main_section{
+ {% if  fm.errors %}
+ height: 100%;
+ {% else %}
+ height: 100vh;
+ {% endif %}
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ flex-direction: column;
+}
+
+.subtitle{
+ font-size: 90%;
+ font-weight: 00;
+ font-family: 'Poppins', sans-serif;
+}
+.title{
+ font-size: 148%;
+ font-family: 'Poppins', sans-serif;
+ font-weight: 600;
+ letter-spacing: 3px;
+ text-transform: uppercase;
+}
+.reg_title {
+color: rgb(240, 110, 190);
+display: flex;
+font-size: 130%;
+font-family: 'Poppins', sans-serif;
+justify-content: center;
+align-items: center;
+margin-top: 2%;
+}
+.reg_title_logo {
+color: rgb(240, 110, 190);
+width: 24%;
+}
+.main .geekmark:after {
+left: 3px;
+bottom: 5px;
+width: 9px;
+height: 60%;
+border: solid white;
+border-width: 0 3px 3px 0;
+-webkit-transform: rotate(45deg);
+-ms-transform: rotate(45deg);
+transform: rotate(45deg);
+}
+.quote{
+  font-size: 96%;
+}
+.reg_card {
+height: 54%;
+width: 90%;
+border-radius: 15px;
+font-size: 100%;
+/* border: 4px solid rgb(240, 110, 190); */
+padding: 5%;
+margin-bottom:51% ;
+box-shadow: rgba(221, 156, 200, 0.779) 0px 5px 15px 0px;
+}
+.main_logo {
+display: flex;
+flex-direction: row;
+padding: 8%;
+margin-top: 3%;
+
+}
+
+.reg_card h1{
+ font-size: 130%;
+ font-weight: 600;
+ font-family: 'Poppins', sans-serif;
+}
+}
+    </style>
+  </head>
+  <body>
+   
+<section class = 'main_section'>
+<div class="slogan_div">
+  <div class="subtitle"><i>India's Own Artist Platform</i></div>
+  <div class="title">Launching Soon</div>
+</div>
+<div class="registration_div">
+  <div class="main_logo">
+    <div class="reg_title_logo"><img src = '../static/images/Business-logo.png'></div>
+    <div class="reg_title">
+      <div class="Kbus">
+        <b>Kalaakaar</b>forBusiness<br><p>Registrations Open!</p>
+      </div>
+  
+      </div>
+  </div>
+  <div class="card reg_card">
+    <div class="quote">
+      <i class='bx bxs-check-circle'></i> The most difficult step is the initial one.
+    </div>
+    <h1> 
+        Congrats {{fl}},
+      
+    </h1>
+      <h1>
+        Registration Complete
+      </h1>
+      <p>You'll be notified as we launch our app ,</br>
+      Thanks For Choosing Our Platform.</p>
+        
+          <a href ='/' type="submit" id='btn' class="btn btn-dark" name="registration">Back To Home</a>
+       
+  </div>
+
+</div>
+</section>
+  
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>
