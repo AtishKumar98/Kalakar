@@ -144,7 +144,7 @@ def OTPRegistration(request):
         u_otp = request.POST['otp']
         otp = request.session.get('otp')
         user = request.session.get('user')
-        print(otp)
+        # print(otp)
         hashed_pwd = make_password(request.session['password'])
         p_number = request.session.get('number')
         ag = request.session.get('is_agreed')
@@ -157,7 +157,7 @@ def OTPRegistration(request):
         if int(u_otp)==otp:
             MyUser.objects.create(email=email_address,password=hashed_pwd,full_name=fl,is_agreed=ag,choose_a_kalaakaar=ck,Bussiness_name=bn,city=ct,Pincode=pc,Phone_number=p_number)
             user_instance = MyUser.objects.get(email=email_address)
-            print(user_instance, '$$$$$$$$$$')
+            # print(user_instance, '$$$$$$$$$$')
             Profile.objects.create(user=user_instance,phone_number=p_number)
 
             fms3= {
@@ -178,8 +178,8 @@ def OTPRegistration(request):
             request.session.delete('user')
             request.session.delete('password')
             # fms = MyUser.objects.values()
-            print(fl,'#######$$$$$$$$')
-            print(p_number,'NUMBERRR')
+            # print(fl,'#######$$$$$$$$')
+            # print(p_number,'NUMBERRR')
             context = {'fl':fl}
             return redirect('/confirmed_user/',context)
         else:
@@ -195,8 +195,8 @@ def OTPRegistration(request):
 
 def confirmation ( request ) :
     fl = request.session.get('full_name')
-    print('########$$$$$$$$$$')
-    print(fl)
+    # print('########$$$$$$$$$$')
+    # print(fl)
     context =  {'fl':fl}
     return render(request ,'confirmed_user.html',context)
 
