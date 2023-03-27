@@ -47,6 +47,7 @@ class UserRegistrationForm(UserCreationForm):
         self.fields['password1'].widget = forms.PasswordInput(attrs={'placeholder': ("Enter Your Password")})
         self.fields['password2'].widget = forms.PasswordInput(attrs={'placeholder': ("Confirm Your Password")})
         self.fields['Bussiness_name'].required = False
+        self.fields['email'].widget.attrs.pop("autofocus",None)
         # self.fields['date_of_birth'] = forms.DateField()
 
 

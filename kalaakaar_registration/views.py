@@ -177,7 +177,6 @@ def OTPRegistration(request):
             request.session.delete('otp')
             request.session.delete('user')
             request.session.delete('password')
-            messages.success(request,'Registration Done!')
             # fms = MyUser.objects.values()
             print(fl,'#######$$$$$$$$')
             print(p_number,'NUMBERRR')
@@ -185,6 +184,11 @@ def OTPRegistration(request):
             return redirect('/confirmed_user/',context)
         else:
             messages.error(request, 'Wrong OTP Try Again')
+    if request.method == "POST" and 'resend-otp' in request.POST:
+        otp = request.session.get('otp')
+        message = f"Your Registration OTP for Kalakar is {otp}"
+        send_OTP(p_number,message)
+
     content = {'p_number':p_number}
     return render (request, 'OTP_reg.html',content)
 
