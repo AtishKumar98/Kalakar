@@ -97,6 +97,7 @@
       }
       .reg_card h1{
         font-size: 150%;
+        margin-left: 5%;
         font-weight: 600;
         font-family: 'Poppins', sans-serif;
       }
@@ -113,9 +114,10 @@
         text-transform: uppercase;
       }
       .btn{
-        width: 95%;
-        position: relative;
-        margin-left: -3%;
+        width: 140%;
+        /* position: relative; */
+        /* margin-left: -3%; */
+        border-radius: 10px !important;
         transition: all 0.3s ease;
       }
    
@@ -156,6 +158,8 @@
       }
       .reg_title_logo img{
         width: 100%;
+        min-width:73px;
+        min-height:71px;
         height: auto;
       }
 
@@ -264,9 +268,9 @@
       }
       .main_section{
         {% if  fm.errors %}
-        height: 100%;
+        /* height: 100%; */
         {% else %}
-        height: 100vh;
+        /* height: 100vh; */
         {% endif %}
         display: flex;
         justify-content: center;
@@ -275,7 +279,7 @@
       }
 
       .subtitle{
-        font-size: 90%;
+        font-size: 90%; 
         font-weight: 00;
         font-family: 'Poppins', sans-serif;
       }
@@ -337,7 +341,7 @@
 @media (max-width:1400px)  and (min-width: 1000px)
 	{
     .main_section{
-       height: 100%;
+       /* height: 100%; */
    }  
    .geekmark {
             position: absolute;
@@ -430,9 +434,9 @@
       {{fm.is_agreed}}
         <span class="geekmark"></span>
     </label>
-      <div class="col-12" style="display: flex;justify-content: center;align-items: center;">
+     
           <button type="submit" id = 'btn' class="btn btn-dark" name="registration">Register</button>
-        </div>
+        
     </form>
   </div>
 </div>
