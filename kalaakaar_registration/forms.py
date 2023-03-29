@@ -14,11 +14,15 @@ def email_exists(value):
     
 Kalakaar = (
         ("kalaakaari", 'Choose kalaakaari'),
-        ("CR", 'Choreographer'),
+        ("AN", 'Anchor'),
         ("SR", 'Singer'),
-        ("TA", 'Tatoo Artist'),
-        ("PH", 'Photographer'),
+        ("CR", 'Choreographer'),
         ("VH", 'Videographer'),
+        ("PH", 'Photographer'),
+        ("MD", 'Mehendi Artist'),
+        ("MA", 'Makeup Artist'),
+        ("SA", 'Sketch Artist'),
+        ("TA", 'Tatoo Artist'),
  )
 class UserRegistrationForm(UserCreationForm):
     email = forms.EmailField( validators=[email_exists])
