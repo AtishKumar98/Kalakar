@@ -19,7 +19,7 @@ Kalakaar = (
         ("CR", 'Choreographer'),
         ("VH", 'Videographer'),
         ("PH", 'Photographer'),
-        ("DJ", 'DISC Jockey(DJ)'),
+        ("DJ", 'DJ'),
         ("MD", 'Mehendi Artist'),
         ("MA", 'Makeup Artist'),
         ("SA", 'Sketch Artist'),
