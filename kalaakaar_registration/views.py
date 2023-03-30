@@ -9,6 +9,8 @@ from django.contrib.auth import authenticate, login , logout
 from .models import Profile
 from django.contrib.auth.decorators import login_required
 import json
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 import random 
 from django.conf import settings
 from django.contrib.auth.hashers import make_password, check_password
@@ -182,25 +184,48 @@ def OTPRegistration(request):
             # print(fl,'#######$$$$$$$$')
             # print(p_number,'NUMBERRR')
             context = {'fl':fl}
-
+            # simple_email_context = ssl.create_default_context()
+            email = MIMEMultipart()
+            email.set_unixfrom('author')
+            email['From']="hello@kalaakaar.co"
+            email['To']=email_address
+            email['Subject'] = 'You are registered as Kalaakaar'
+            #   bcc = "siddhu.dhangar@tiss.edu"
+            mail_pwd="hello@kalaakaar23"
+            #   mails_to = ' , '.join(mail_from) if True else you
+            # subject_txt = 'Registration Confirmation for %s' %(conference_title)
+            # subject_txt = 'You are registered as Kalaakaar'
+            # BillingName = str(conf_detail_obj.cr_title) + ' ' +  str(conf_detail_obj.cr_fullname) 
+            # msg_body = '\n%s,\n\n A payment of Rs.%s received towards the registration fees for the "%s". Thank you for the payment. Your Registration is confirmed and the registration number is %s.\n\n Note: This is an auto-generated mail, please dot not respond to this email.'%(BillingName,request.POST['amt'],conference_title,request.POST['mer_txn'])
+            msg_body = 'Thanks Kalaakaar for your contribution in our registration, \n\n Soon you will be updated with our app"s launching Date. And we will let you know when to Login with your email and password.'
+            # msg = 'Subject:{}\n\n{}'.format(email['Subject'], msg_body)
+            email.attach(MIMEText(msg_body))
+            server = smtplib.SMTP_SSL('smtpout.secureserver.net',465)
+            server.ehlo()
+            # server.starttls(context=simple_email_context)
+            server.login('hello@kalaakaar.co','hello@kalaakaar23')
+            #   server.login('AKIAYNJZLMUQQXPKMG5B','BItsVQqmsAojywKw8YzfvgpMbPyNBhOXgJ1e0Iz/OJB3')
+            server.sendmail('hello@kalaakaar.co', email_address, email.as_string())
+            print('SENT MAIL','FROM',email['From'],'TO',email_address ,msg_body)
+            server.quit()
             # try:
-            #     simple_email_context = ssl.create_default_context()
-            #     mail_from="atishkumar31518@gmail.com"
+            #     email = MIMEMultipart('text/csv')
+            #     mail_from['From']="hello@kalaakaar.co"
             #     #   bcc = "siddhu.dhangar@tiss.edu"
-            #     mail_pwd=""
+            #     mail_pwd="hello@kalaakaar23"
             #     #   mails_to = ' , '.join(mail_from) if True else you
-            #     server = smtplib.SMTP('smtp.gmail.com',587)
+            #     server = smtplib.SMTP_SSL('smtpout.secureserver.net',465)
             #     # subject_txt = 'Registration Confirmation for %s' %(conference_title)
             #     subject_txt = 'You are registered as Kalaakaar'
             #     # BillingName = str(conf_detail_obj.cr_title) + ' ' +  str(conf_detail_obj.cr_fullname) 
             #     # msg_body = '\n%s,\n\n A payment of Rs.%s received towards the registration fees for the "%s". Thank you for the payment. Your Registration is confirmed and the registration number is %s.\n\n Note: This is an auto-generated mail, please dot not respond to this email.'%(BillingName,request.POST['amt'],conference_title,request.POST['mer_txn'])
             #     msg_body = 'Thanks Kalaakaar for your contribution in our registration, \n\n Soon you will be updated with our app"s launching Date. And we will let you know when to Login with your email and password.'
             #     msg = 'Subject:{}\n\n{}'.format(subject_txt, msg_body)
-            #     server.starttls(context=simple_email_context)
+            #     # server.starttls(context=simple_email_context)
             #     server.login(mail_from,mail_pwd)
-            #     print('SENT MAIL',email_address)
             #     #   server.login('AKIAYNJZLMUQQXPKMG5B','BItsVQqmsAojywKw8YzfvgpMbPyNBhOXgJ1e0Iz/OJB3')
             #     server.sendmail(mail_from, email_address, msg)
+            #     print('SENT MAIL','FROM',mail_from,'TO',email_address,'msg',msg)
                 
             # except:
             #     pass
