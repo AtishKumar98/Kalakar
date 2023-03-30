@@ -362,12 +362,14 @@
 	{
     .main_section{
        height: 100%;
-   }  
+   }
+  
+  
    .geekmark {
             position: absolute;
             top: 0;
             left: 2%;
-            height: 55%;
+            height: 40%;
             width: 10%;
             background-color: white;
             border: 0.5px solid rgb(240, 110, 190);
@@ -392,6 +394,7 @@
         font-weight: 600;
         font-family: 'Poppins', sans-serif;
       }
+      
       }
 /* IPAD */
       @media only screen and (min-width: 768px) and (max-width:1024px){
@@ -492,12 +495,51 @@
       }
 
 
+      @media only screen and (min-width: 1280px) and (max-height: 950px) {
+    .main_section{
+      min-height: 100vh;
+   }
+  
+  
+   .geekmark {
+            position: absolute;
+            top: 0;
+            left: 2%;
+            height: 40%;
+            width: 10%;
+            background-color: white;
+            border: 0.5px solid rgb(240, 110, 190);
+        }
+        .reg_title_logo{
+        color: rgb(240, 110, 190);
+        width: 25%;
+      }
+
+     .registration_div{
+      min-height: 100vh;
+     }
+      .reg_title{
+        color: rgb(240, 110, 190);
+        display: flex;
+        font-size: 135%;
+        font-family: 'Poppins', sans-serif;
+        justify-content: center;
+        align-items: center;
+        margin-top: 2%;
+      }
+      .reg_card h1{
+        font-size: 120%;
+        font-weight: 600;
+        font-family: 'Poppins', sans-serif;
+      }
+      
+      }
       @media only screen and (min-width: 320px) and (max-height: 568px)  { 
         .main_logo{
           margin-top: 85%;
         }
       }
-        
+     
 
 
   
