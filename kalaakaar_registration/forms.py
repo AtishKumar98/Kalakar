@@ -20,6 +20,7 @@ Kalakaar = (
         ("VH", 'Videographer'),
         ("PH", 'Photographer'),
         ("DJ", 'DJ'),
+        ("MG", 'Magician'),
         ("MD", 'Mehendi Artist'),
         ("MA", 'Makeup Artist'),
         ("SA", 'Sketch Artist'),
