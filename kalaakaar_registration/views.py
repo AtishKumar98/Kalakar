@@ -197,7 +197,7 @@ def OTPRegistration(request):
             # subject_txt = 'You are registered as Kalaakaar'
             # BillingName = str(conf_detail_obj.cr_title) + ' ' +  str(conf_detail_obj.cr_fullname) 
             # msg_body = '\n%s,\n\n A payment of Rs.%s received towards the registration fees for the "%s". Thank you for the payment. Your Registration is confirmed and the registration number is %s.\n\n Note: This is an auto-generated mail, please dot not respond to this email.'%(BillingName,request.POST['amt'],conference_title,request.POST['mer_txn'])
-            msg_body = 'Thankyou for registering with us, you are now our Business Partner! \n \n As we are nearing the launch of our app, you will be notified on its launch - after all, you are our cheif guest.\n \n \n \n Thankyou.'
+            msg_body = 'Thankyou for registering with us, you are now our Business Partner! \n \n As we are nearing the launch of our app, you will be notified on its launch - after all, you are our cheif guest.\n \n \n Thankyou.'
             # msg = 'Subject:{}\n\n{}'.format(email['Subject'], msg_body)
             email.attach(MIMEText(msg_body))
             server = smtplib.SMTP_SSL('smtpout.secureserver.net',465)
