@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Error 500</title>
+    <title>Error 403 CSRF</title>
 </head>
 <style>
    :root {
@@ -138,11 +138,11 @@ a {
 </style>
 <body>
     <div id="error">Error</div>
-    <div class="error-num">500
+    <div class="error-num">403
       <!-- <div class="error-num__clip">500</div> -->
     </div>
-    <p id="desc">Uh oh, Looks like our code is going through some mood swings<br>
-         Just like your girl</p>
-    <p>Dont worry it'll be okay soon or <a href="mailto:hello@kalaakaar.co">Send us email</a> for more queries</p></p>
+    <p id="desc">Uh oh, Looks like submit was slow or our server didn't authenticate your submitted data.</p>
+    <p> Go back Refresh your page and fill details<br> 
+         or <a href="mailto:hello@kalaakaar.co">Send us email</a> for more queries</p>
 </body>
 </html>
