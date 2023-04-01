@@ -7,7 +7,7 @@ from django.contrib.auth.models import (
 )
 
 
-phone_regex = RegexValidator(regex=r'^\+?\d{10,10}$',message="You are allowed to enter 10 digit number only. Dont include +91 or less than 10 digits")
+phone_regex = RegexValidator(regex=r'^\+?\d{10,10}$',message="You are allowed to enter 10 digit number only. Dont enter +91 or less than 10 digits")
 
 
 
