@@ -7,7 +7,7 @@ from django.contrib.auth.models import (
 )
 
 
-phone_regex = RegexValidator(regex=r'^\+?\d{9,15}$',message="Phone must be entered in the format +99999999, Upto 15 digits allowed")
+phone_regex = RegexValidator(regex=r'^\+?\d{10,10}$',message="You are allowed to enter 10 digit number only. Dont include +91")
 
 
 
@@ -53,11 +53,17 @@ class MyUser(AbstractBaseUser):
  
 
     Kalakaar = [
-        ("CR", 'Choreographer'),
+        ("AN", 'Anchor'),
         ("SR", 'Singer'),
-        ("TA", 'Tatoo Artist'),
-        ("PH", 'Photographer'),
+        ("CR", 'Choreographer'),
         ("VH", 'Videographer'),
+        ("PH", 'Photographer'),
+        ("DJ", 'DJ'),
+        ("MG", 'Magician'),
+        ("MD", 'Mehendi Artist'),
+        ("MA", 'Makeup Artist'),
+        ("SA", 'Sketch Artist'),
+        ("TA", 'Tatoo Artist'),
     ]
     full_name = models.CharField(null=True,max_length=50)
     choose_a_kalaakaar = models.CharField(max_length=2, default='SL', choices = Kalakaar,null=True)
