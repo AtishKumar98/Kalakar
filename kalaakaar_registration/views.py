@@ -13,6 +13,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import random 
 from django.conf import settings
+from  Kalaakaar.settings import Email_Password
 from django.contrib.auth.hashers import make_password, check_password
 import requests
 # import pyrebase
@@ -203,7 +204,7 @@ def OTPRegistration(request):
             server = smtplib.SMTP_SSL('smtpout.secureserver.net',465)
             server.ehlo()
             # server.starttls(context=simple_email_context)
-            server.login('hello@kalaakaar.co','Vai2ju0x@123')
+            server.login('hello@kalaakaar.co',Email_Password)
             #   server.login('AKIAYNJZLMUQQXPKMG5B','BItsVQqmsAojywKw8YzfvgpMbPyNBhOXgJ1e0Iz/OJB3')
             server.sendmail('hello@kalaakaar.co', email_address, email.as_string())
             print('SENT MAIL','FROM',email['From'],'TO',email_address ,msg_body)
