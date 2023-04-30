@@ -1,9 +1,43 @@
 from rest_framework import serializers
-from kalaakaar_registration.models import MyUser,Profile
+from kalaakaar_registration.models import MyUser
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
+from urllib import request
+import requests
+import json
+import random
+from .helpers import  *
+from django.contrib.auth import authenticate
+
+
+
+
+def send_OTP(number, message):
+    url = 'https://www.fast2sms.com/dev/bulkV2'
+    my_data = {
+    'sender_id': 'FSTSMS', 
+    'message': message, 
+    'language': 'english',
+    'route': 'p',
+    'numbers': number 
+}
+    headers = {
+    'authorization': 'ShG0stW0urbiBjedsQmCgGATd1RCDMgCVUwSG9f5rxCCMAJuro5NkR1oIWmi',
+    'Content-Type': "application/x-www-form-urlencoded",
+    'Cache-Control': "no-cache"
+}
+    
+    
+    response = requests.request("POST",
+                            url,
+                            data = my_data,
+                            headers = headers)
+                            # load json data from source
+    returned_msg = json.loads(response.text)
+    print(returned_msg['message'])
+
 
 
 
@@ -11,6 +45,9 @@ class UserSerializer(serializers.ModelSerializer):
   class Meta:
     model = MyUser
     fields = ['email', 'password1', 'password2', 'is_agreed' , 'full_name', 'choose_a_kalaakaar', 'Bussiness_name','city','Pincode' ]
+
+
+
 
 class RegisterSerializer(serializers.ModelSerializer):
   email = serializers.EmailField(
@@ -25,7 +62,7 @@ class RegisterSerializer(serializers.ModelSerializer):
   class Meta:
     model = MyUser
     fields = ('email', 'password', 'password2',
-          'full_name', 'choose_a_kalaakaar','Bussiness_name','city','Pincode','Phone_number')
+          'full_name', 'choose_a_kalaakaar','Bussiness_name','city','Pincode','Phone_number','is_agreed')
     extra_kwargs = {
       'email': {'required': True},
       'full_name': {'required': True}
@@ -35,7 +72,12 @@ class RegisterSerializer(serializers.ModelSerializer):
       raise serializers.ValidationError(
         {"password": "Password fields didn't match."})
     return attrs
+  
   def create(self, validated_data):
+    send_number = validated_data['Phone_number'],
+    otp = random.randint(100000,999999)
+    message = f"Your Registration OTP for Kalakar is {otp}"
+    send_OTP(send_number,message)
     user = MyUser.objects.create(
       email=validated_data['email'],
       full_name=validated_data['full_name'],
@@ -43,8 +85,16 @@ class RegisterSerializer(serializers.ModelSerializer):
       Phone_number=validated_data['Phone_number'],
       city = validated_data['city'],
       Pincode = validated_data['Pincode'],
-
+      is_agreed = validated_data['is_agreed'],
+      otp = otp
     )
+    
     user.set_password(validated_data['password'])
     user.save()
     return user
+
+
+
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField()
