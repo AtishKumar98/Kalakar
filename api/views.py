@@ -4,27 +4,35 @@ from rest_framework.views import APIView
 from django.contrib.auth import login
 from kalaakaar_registration.models import MyUser
 from rest_framework.response import Response
-from .serializers import UserSerializer,RegisterSerializer,LoginSerializer
+from .serializers import UserSerializer,RegisterSerializer,LoginSerializer,CustomAuthTokenSerializer
 from django.contrib.auth.models import User
 from rest_framework.authentication import TokenAuthentication
 from rest_framework import generics
 from rest_framework import permissions
 from .helpers import *
-from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.views import LoginView as KnoxLoginView
 from rest_framework import status
 from django.contrib.auth import authenticate, login
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.views import ObtainAuthToken
+from django.contrib.auth import logout
+from django.http import JsonResponse
+
 
 # Class based view to Get User Details using Token Authentication
-class UserDetailAPI(APIView):
-  authentication_classes = (TokenAuthentication,)
-  permission_classes = (AllowAny,)
-  def get(self,request,*args,**kwargs):
-    user = MyUser.objects.get(id=request.user.id)
-    serializer = UserSerializer(user)
-    return Response(serializer.data)
+def user_details_view(request):
+    user = request.user
+    if user.is_authenticated:
+        data = {
+            'phone_number': user.is_admin,
+            'email': user.email,
+            # Add other user details as needed
+        }
+        return JsonResponse(data)
+    else:
+        return JsonResponse({'error': 'User not authenticated'}, status=401)
 
 #Class based view to register user
 class RegisterUserAPIView(generics.CreateAPIView):
@@ -79,6 +87,11 @@ class VerifyOtp(APIView):
      
 
 
+
+def logout_view(request):
+    logout(request)
+    return JsonResponse({'success': True})
+
 class LoginView(APIView):
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
@@ -91,6 +104,30 @@ class LoginView(APIView):
             return Response({'error': 'Invalid credentials'}, status=400)
         refresh = RefreshToken.for_user(user)
         return Response({
-            'refresh': str(refresh),
-            'access': str(refresh.access_token)
+            'status':"Login Successfull",
+            'token': str(refresh.access_token)
         })
+
+# class LoginView(APIView):
+#     def post(self, request):
+#         username = request.data.get('email')
+#         password = request.data.get('password')
+#         user = authenticate(request, user=username, password=password)
+#         if user:
+#             return Response({'token': 'your_token_here'})
+#         else:
+#             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+        
+# class CustomObtainAuthToken(ObtainAuthToken):
+#     serializer_class = CustomAuthTokenSerializer
+
+#     def post(self, request, *args, **kwargs):
+#         serializer = self.serializer_class(data=request.data,
+#                                             context={'request': request})
+#         serializer.is_valid(raise_exception=True)
+#         user = serializer.validated_data['user']
+#         token, created = Token.objects.get_or_create(user=user)
+#         return Response({'token': token.key}, status=status.HTTP_200_OK)
+    
+  
+    
