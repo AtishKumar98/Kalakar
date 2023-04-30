@@ -19,7 +19,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from django.contrib.auth import logout
 from django.http import JsonResponse
-
+from django.views.decorators.csrf import csrf_exempt
 
 # Class based view to Get User Details using Token Authentication
 def user_details_view(request):
@@ -88,6 +88,7 @@ class VerifyOtp(APIView):
 
 
 
+@csrf_exempt
 def logout_view(request):
     logout(request)
     return JsonResponse({'success': True})
@@ -99,12 +100,26 @@ class LoginView(APIView):
         user = authenticate(
             username=serializer.validated_data['email'],
             password=serializer.validated_data['password']
+            
         )
         if user is None:
+            data = {
+            'id': user.id,
+            'email': user.email,
+            # Add other user data as needed
+        }
             return Response({'error': 'Invalid credentials'}, status=400)
+        if user.choose_a_kalaakaar == 'AN':
+           user.choose_a_kalaakaar = "Anchor"
         refresh = RefreshToken.for_user(user)
         return Response({
-            'status':"Login Successfull",
+            'status':"Login Successfull",'id': user.id,
+            'email': user.email,
+            'full_name':user.full_name,
+            'Phone_number': user.Phone_number,
+            'Bussiness_name':user.Bussiness_name,
+            'city':user.city,
+            'choose_a_kalaakaar':user.choose_a_kalaakaar,
             'token': str(refresh.access_token)
         })
 
