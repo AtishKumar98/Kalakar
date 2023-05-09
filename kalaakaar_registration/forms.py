@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Profile,phone_regex
+from .models import phone_regex
 from .models import MyUser
 from django.forms import TextInput,EmailInput,PasswordInput
 
@@ -31,6 +31,8 @@ class UserRegistrationForm(UserCreationForm):
     email.widget.attrs['placeholder'] = "Enter Your Email"
     full_name = forms.CharField()
     full_name.widget.attrs['placeholder'] = "Enter Your Fullname"
+    Phone_number = forms.CharField(max_length=17,validators=[phone_regex])
+    Phone_number.widget.attrs['placeholder'] = "Enter Your Phone number"
     choose_a_kalaakaar = forms.ChoiceField(choices = Kalakaar)
     choose_a_kalaakaar.widget.attrs['placeholder'] = "Select a kalaar"
     Bussiness_name = forms.CharField()
@@ -57,10 +59,10 @@ class UserRegistrationForm(UserCreationForm):
         # self.fields['date_of_birth'] = forms.DateField()
 
 
-class UserProfile(forms.ModelForm):
+# class UserProfile(forms.ModelForm):
 
-    phone_number = forms.CharField(max_length=17,validators=[phone_regex])
-    phone_number.widget.attrs['placeholder'] = "Enter Your Phone number"
-    class Meta:
-        model = Profile
-        fields = ['phone_number']
+#     phone_number = forms.CharField(max_length=17,validators=[phone_regex])
+#     phone_number.widget.attrs['placeholder'] = "Enter Your Phone number"
+#     class Meta:
+#         model = Profile
+#         fields = ['phone_number']

@@ -70,9 +70,11 @@ class MyUser(AbstractBaseUser):
     Bussiness_name = models.CharField(max_length=50,null=True)
     city = models.CharField(null=True,max_length=50)
     Pincode = models.IntegerField(null=True)
-    Phone_number = models.CharField(null=True,max_length=10)
-    date_of_birth = models.DateField(null=True)
-    is_agreed = models.BooleanField(default=True)
+    profile_update = models.ImageField(null=True,blank=True, default= 'Profile.jpg')
+    Phone_number =  models.CharField(validators=[phone_regex],max_length=10,unique=True)
+    otp = models.CharField(max_length=6, null=True,blank=True)
+    is_phone_verified = models.BooleanField(default=False)
+    is_agreed = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
@@ -101,6 +103,6 @@ class MyUser(AbstractBaseUser):
         return self.is_admin
 
 
-class Profile(models.Model):
-    user = models.OneToOneField(MyUser,on_delete=models.CASCADE)
-    phone_number = models.CharField(validators=[phone_regex],max_length=10,unique=True)
+# class Profile(models.Model):
+#     user = models.OneToOneField(MyUser,on_delete=models.CASCADE)
+#     phone_number = models.CharField(validators=[phone_regex],max_length=10,unique=True)
