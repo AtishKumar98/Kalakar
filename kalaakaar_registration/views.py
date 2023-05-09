@@ -6,7 +6,7 @@ from django.contrib import messages
 # from django.contrib.auth.models import User
 from .models import MyUser
 from django.contrib.auth import authenticate, login , logout
-from .models import Profile
+# from .models import Profile
 from django.contrib.auth.decorators import login_required
 import json
 from email.mime.multipart import MIMEMultipart
@@ -94,8 +94,7 @@ def Registration(request):
     # channel_type = database.child('Data').child('Bor').get().val()
     if request.method == 'POST' and 'registration' in request.POST:
         fm = UserRegistrationForm(request.POST)
-        up = UserProfile(request.POST)
-        if fm.is_valid() and up.is_valid():
+        if fm.is_valid():
             e = fm.cleaned_data['email']
             # u = fm.cleaned_data['username']
             p = fm.cleaned_data['password1']
@@ -115,14 +114,34 @@ def Registration(request):
             request.session['city'] = ct
             request.session['Pincode'] = pc
             hashed_pwd = make_password(request.session['password'])
-            p_number = up.cleaned_data['phone_number']
+            p_number = fm.cleaned_data['Phone_number']
             request.session['number'] = p_number
             otp = random.randint(100000,999999)
             # print(otp)
             # print(p_number)
             request.session['otp'] = otp
-            message = f"Your Registration OTP for Kalakar is {otp}"
-            send_OTP(p_number,message)
+            email = MIMEMultipart()
+            email.set_unixfrom('author')
+            email['From']="hello@kalaakaar.co"
+            email['To']=e
+            email['Subject'] = 'OTP for Kalaakaar Registration'
+            #   bcc = "siddhu.dhangar@tiss.edu"
+            #   mails_to = ' , '.join(mail_from) if True else you
+            # subject_txt = 'Registration Confirmation for %s' %(conference_title)
+            # subject_txt = 'You are registered as Kalaakaar'
+            # BillingName = str(conf_detail_obj.cr_title) + ' ' +  str(conf_detail_obj.cr_fullname) 
+            # msg_body = '\n%s,\n\n A payment of Rs.%s received towards the registration fees for the "%s". Thank you for the payment. Your Registration is confirmed and the registration number is %s.\n\n Note: This is an auto-generated mail, please dot not respond to this email.'%(BillingName,request.POST['amt'],conference_title,request.POST['mer_txn'])
+            msg_body = f'<h3>Your OTP For Kalaakaar is {otp} <h3><br><img src = "https://kalaakaar.co/static/images/Business-logo.png" style="width:10%;height:10%;">'
+            # msg = 'Subject:{}\n\n{}'.format(email['Subject'], msg_body)
+            email.attach(MIMEText(msg_body,"html"))
+            server = smtplib.SMTP_SSL('smtpout.secureserver.net',465)
+            server.ehlo()
+            # server.starttls(context=simple_email_context)
+            server.login('hello@kalaakaar.co',Email_Password)
+            #   server.login('AKIAYNJZLMUQQXPKMG5B','BItsVQqmsAojywKw8YzfvgpMbPyNBhOXgJ1e0Iz/OJB3')
+            server.sendmail('hello@kalaakaar.co', e, email.as_string())
+            print('SENT MAIL','FROM',email['From'],'TO',e ,msg_body)
+            server.quit()
             
             # print(fms3)
             # for fms in fms3:
@@ -133,8 +152,8 @@ def Registration(request):
         
     else:
         fm = UserRegistrationForm()
-        up = UserProfile()
-    context = {'fm':fm, 'up':up,}
+        # up = UserProfile()
+    context = {'fm':fm}
     
     
 
@@ -144,6 +163,7 @@ def Registration(request):
 
 def OTPRegistration(request):
     p_number = request.session.get('number')
+    email_address = request.session.get('email')
     if request.method == 'POST' and 'otp-registration' in request.POST:
         u_otp = request.POST['otp']
         otp = request.session.get('otp')
@@ -160,9 +180,9 @@ def OTPRegistration(request):
         email_address = request.session.get('email')
         if int(u_otp)==otp:
             MyUser.objects.create(email=email_address,password=hashed_pwd,full_name=fl,is_agreed=ag,choose_a_kalaakaar=ck,Bussiness_name=bn,city=ct,Pincode=pc,Phone_number=p_number)
-            user_instance = MyUser.objects.get(email=email_address)
+            # user_instance = MyUser.objects.get(email=email_address)
             # print(user_instance, '$$$$$$$$$$')
-            Profile.objects.create(user=user_instance,phone_number=p_number)
+            # Profile.objects.create(user=user_instance,phone_number=p_number)
 
             fms3= {
                 'Full_Name':fl,
@@ -237,9 +257,31 @@ def OTPRegistration(request):
     if request.method == "POST" and 'resend-otp' in request.POST:
         otp = request.session.get('otp')
         message = f"Your Registration OTP for Kalakar is {otp}"
-        send_OTP(p_number,message)
+        email = MIMEMultipart()
+        email.set_unixfrom('author')
+        email['From']="hello@kalaakaar.co"
+        email['To']=email_address
+        email['Subject'] = 'You are registered as Kalaakaar'
+        #   bcc = "siddhu.dhangar@tiss.edu"
+        mail_pwd="hello@kalaakaar23"
+        #   mails_to = ' , '.join(mail_from) if True else you
+        # subject_txt = 'Registration Confirmation for %s' %(conference_title)
+        # subject_txt = 'You are registered as Kalaakaar'
+        # BillingName = str(conf_detail_obj.cr_title) + ' ' +  str(conf_detail_obj.cr_fullname) 
+        # msg_body = '\n%s,\n\n A payment of Rs.%s received towards the registration fees for the "%s". Thank you for the payment. Your Registration is confirmed and the registration number is %s.\n\n Note: This is an auto-generated mail, please dot not respond to this email.'%(BillingName,request.POST['amt'],conference_title,request.POST['mer_txn'])
+        msg_body = 'Thankyou for registering with us, you are now our Business Partner! \n \n As we are nearing the launch of our app, you will be notified on its launch - after all, you are our cheif guest.\n \n \n Thankyou.'
+        # msg = 'Subject:{}\n\n{}'.format(email['Subject'], msg_body)
+        email.attach(MIMEText(msg_body))
+        server = smtplib.SMTP_SSL('smtpout.secureserver.net',465)
+        server.ehlo()
+        # server.starttls(context=simple_email_context)
+        server.login('hello@kalaakaar.co',Email_Password)
+        #   server.login('AKIAYNJZLMUQQXPKMG5B','BItsVQqmsAojywKw8YzfvgpMbPyNBhOXgJ1e0Iz/OJB3')
+        server.sendmail('hello@kalaakaar.co', email_address, email.as_string())
+        print('SENT MAIL','FROM',email['From'],'TO',email_address ,msg_body)
+        server.quit()
 
-    content = {'p_number':p_number}
+    content = {'p_number':p_number,'email_address':email_address}
     return render (request, 'OTP_reg.html',content)
 
 
@@ -296,11 +338,19 @@ def loginpage(request):
 
 @login_required(login_url='/login/')
 def home(request):
-    context = {}
+    user_id = request.user.id
+    User = MyUser.objects.get(id=user_id)
+    context = {'User':User,}
     return render (request, 'home.html', context)
 
 
 
+# @login_required(login_url='/login/')
+# def profile(request):
+#     user_id = request.user.id
+#     User = MyUser.objects.get(id=user_id)
+#     context = {'User':User,}
+#     return render (request, 'profile.html', context)
 
 def privacy_policy(request):
     context = {}
