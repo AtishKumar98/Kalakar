@@ -8,35 +8,44 @@ from urllib import request
 import requests
 import json
 import random
+from .models import *
 from .helpers import  *
 from django.contrib.auth import authenticate
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+import random 
+from django.conf import settings
+from  Kalaakaar.settings import Email_Password
+from django.contrib.auth.hashers import make_password, check_password
+import requests
+# import pyrebase
+import smtplib
 
 
 
-
-def send_OTP(number, message):
-    url = 'https://www.fast2sms.com/dev/bulkV2'
-    my_data = {
-    'sender_id': 'FSTSMS', 
-    'message': message, 
-    'language': 'english',
-    'route': 'p',
-    'numbers': number 
-}
-    headers = {
-    'authorization': 'ShG0stW0urbiBjedsQmCgGATd1RCDMgCVUwSG9f5rxCCMAJuro5NkR1oIWmi',
-    'Content-Type': "application/x-www-form-urlencoded",
-    'Cache-Control': "no-cache"
-}
+# def send_OTP(number, message):
+#     url = 'https://www.fast2sms.com/dev/bulkV2'
+#     my_data = {
+#     'sender_id': 'FSTSMS', 
+#     'message': message, 
+#     'language': 'english',
+#     'route': 'p',
+#     'numbers': number 
+# }
+#     headers = {
+#     'authorization': 'ShG0stW0urbiBjedsQmCgGATd1RCDMgCVUwSG9f5rxCCMAJuro5NkR1oIWmi',
+#     'Content-Type': "application/x-www-form-urlencoded",
+#     'Cache-Control': "no-cache"
+# }
     
     
-    response = requests.request("POST",
-                            url,
-                            data = my_data,
-                            headers = headers)
-                            # load json data from source
-    returned_msg = json.loads(response.text)
-    print(returned_msg['message'])
+#     response = requests.request("POST",
+#                             url,
+#                             data = my_data,
+#                             headers = headers)
+#                             # load json data from source
+#     returned_msg = json.loads(response.text)
+#     print(returned_msg['message'])
 
 
 
@@ -75,9 +84,32 @@ class RegisterSerializer(serializers.ModelSerializer):
   
   def create(self, validated_data):
     send_number = validated_data['Phone_number'],
+    email_address=validated_data['email']
     otp = random.randint(100000,999999)
     message = f"Your Registration OTP for Kalakar is {otp}"
-    send_OTP(send_number,message)
+    email = MIMEMultipart()
+    email.set_unixfrom('author')
+    email['From']="hello@kalaakaar.co"
+    email['To']=email_address
+    email['Subject'] = 'Your OTP For Kalaakaar application'
+    #   bcc = "siddhu.dhangar@tiss.edu"
+    mail_pwd="hello@kalaakaar23"
+    #   mails_to = ' , '.join(mail_from) if True else you
+    # subject_txt = 'Registration Confirmation for %s' %(conference_title)
+    # subject_txt = 'You are registered as Kalaakaar'
+    # BillingName = str(conf_detail_obj.cr_title) + ' ' +  str(conf_detail_obj.cr_fullname) 
+    # msg_body = '\n%s,\n\n A payment of Rs.%s received towards the registration fees for the "%s". Thank you for the payment. Your Registration is confirmed and the registration number is %s.\n\n Note: This is an auto-generated mail, please dot not respond to this email.'%(BillingName,request.POST['amt'],conference_title,request.POST['mer_txn'])
+    msg_body = f'<h3>Your OTP For Kalaakaar is {otp} <h3><br><img src = "https://kalaakaar.co/static/images/Business-logo.png" style="width:10%;height:10%;">'
+            # msg = 'Subject:{}\n\n{}'.format(email['Subject'], msg_body)
+    email.attach(MIMEText(msg_body,"html"))
+    server = smtplib.SMTP_SSL('smtpout.secureserver.net',465)
+    server.ehlo()
+    # server.starttls(context=simple_email_context)
+    server.login('hello@kalaakaar.co',Email_Password)
+    #   server.login('AKIAYNJZLMUQQXPKMG5B','BItsVQqmsAojywKw8YzfvgpMbPyNBhOXgJ1e0Iz/OJB3')
+    server.sendmail('hello@kalaakaar.co', email_address, email.as_string())
+    print('SENT MAIL','FROM',email['From'],'TO',email_address ,msg_body)
+    server.quit()
     user = MyUser.objects.create(
       email=validated_data['email'],
       full_name=validated_data['full_name'],
