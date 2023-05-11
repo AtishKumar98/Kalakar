@@ -20,7 +20,15 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from django.contrib.auth import logout
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+import random 
+from django.conf import settings
+from  Kalaakaar.settings import Email_Password
+from django.contrib.auth.hashers import make_password, check_password
+import requests
+# import pyrebase
+import smtplib
 
 
 # Class based view to Get User Details using Token Authentication
@@ -71,16 +79,39 @@ class VerifyOtp(APIView):
   def patch(self, request):
     try:
       data = request.data
-      user_obj = MyUser.objects.filter(Phone_number = data.get('Phone_number'))
+      user_obj = MyUser.objects.filter(email = data.get('email'))
       otp = data.get('otp')
-      print(data.get('Phone_number'),'%$$$$$$$$$$$$$$$$$')
+      print(data.get('email'),'%$$$$$$$$$$$$$$$$$')
       print(otp,  'OOOOOOOOOTTTTTTTTP')
       if not user_obj.exists():
          return Response({'status':404, 'message':'user not found'})
 
-      if send_otp_to_mobile(data.get('Phone_number'),user_obj[0]):
+      if send_otp_to_mobile(data.get('email'),user_obj[0]):
+        e = data.get('email')
         message = f'Your New OTP is {otp}'
-        send_OTP(user_obj[0],message)
+        email = MIMEMultipart()
+        email.set_unixfrom('author')
+        email['From']="hello@kalaakaar.co"
+        email['To']=e
+        email['Subject'] = 'Your OTP For Kalaakaar application'
+        #   bcc = "siddhu.dhangar@tiss.edu"
+        mail_pwd="hello@kalaakaar23"
+        #   mails_to = ' , '.join(mail_from) if True else you
+        # subject_txt = 'Registration Confirmation for %s' %(conference_title)
+        # subject_txt = 'You are registered as Kalaakaar'
+        # BillingName = str(conf_detail_obj.cr_title) + ' ' +  str(conf_detail_obj.cr_fullname) 
+        # msg_body = '\n%s,\n\n A payment of Rs.%s received towards the registration fees for the "%s". Thank you for the payment. Your Registration is confirmed and the registration number is %s.\n\n Note: This is an auto-generated mail, please dot not respond to this email.'%(BillingName,request.POST['amt'],conference_title,request.POST['mer_txn'])
+        msg_body = f'<h3>Your OTP For Kalaakaar is {otp} <h3><br><img src = "https://kalaakaar.co/static/images/Business-logo.png" style="width:10%;height:10%;">'
+                # msg = 'Subject:{}\n\n{}'.format(email['Subject'], msg_body)
+        email.attach(MIMEText(msg_body,"html"))
+        server = smtplib.SMTP_SSL('smtpout.secureserver.net',465)
+        server.ehlo()
+        # server.starttls(context=simple_email_context)
+        server.login('hello@kalaakaar.co',Email_Password)
+        #   server.login('AKIAYNJZLMUQQXPKMG5B','BItsVQqmsAojywKw8YzfvgpMbPyNBhOXgJ1e0Iz/OJB3')
+        server.sendmail('hello@kalaakaar.co', e, email.as_string())
+        print('SENT MAIL','FROM',email['From'],'TO',e ,msg_body)
+        server.quit()
         return Response({'status':200, 'message':'New OTP sent'})
       return Response({'status':404, 'message':'Try After Few Seconds'})
 
