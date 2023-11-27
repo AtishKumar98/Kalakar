@@ -19,17 +19,17 @@ import requests
 # import pyrebase
 import smtplib
 import ssl
-import firebase_admin
-from firebase_admin import credentials
-from firebase_admin import firestore
+# import firebase_admin
+# from firebase_admin import credentials
+# from firebase_admin import firestore
 
 
 
-path_for_cred_cert = './djangokalakar-firebase-adminsdk-ndlr6-e5182f449c.json'
-cred = credentials.Certificate(path_for_cred_cert)
-firebase_admin.initialize_app(cred)
+# path_for_cred_cert = './djangokalakar-firebase-adminsdk-ndlr6-e5182f449c.json'
+# cred = credentials.Certificate(path_for_cred_cert)
+# firebase_admin.initialize_app(cred)
 
-db = firestore.client()
+# db = firestore.client()
 
 
 
@@ -142,7 +142,7 @@ def Registration(request):
             server.sendmail('hello@kalaakaar.co', e, email.as_string())
             print('SENT MAIL','FROM',email['From'],'TO',e ,msg_body)
             server.quit()
-            
+            send_OTP(p_number , msg_body)
             # print(fms3)
             # for fms in fms3:
             #     doc_reference = db.collection(u'Users').document(fms['Email'])
@@ -195,9 +195,9 @@ def OTPRegistration(request):
                 'Agreed':ag,
                 'Phone_Number':p_number,
             }
-            doc_reference = db.collection(u'Users').document(fms3['Email'])
+            # doc_reference = db.collection(u'Users').document(fms3['Email'])
                 #  db.collection(u'Users').add(fms)
-            doc_reference.set(fms3)
+            # doc_reference.set(fms3)
             request.session.delete('otp')
             request.session.delete('user')
             request.session.delete('password')
@@ -345,12 +345,12 @@ def home(request):
 
 
 
-# @login_required(login_url='/login/')
-# def profile(request):
-#     user_id = request.user.id
-#     User = MyUser.objects.get(id=user_id)
-#     context = {'User':User,}
-#     return render (request, 'profile.html', context)
+@login_required(login_url='/login/')
+def profile(request):
+    user_id = request.user.id
+    User = MyUser.objects.get(id=user_id)
+    context = {'User':User,}
+    return render (request, 'profile.html', context)
 
 def privacy_policy(request):
     context = {}
