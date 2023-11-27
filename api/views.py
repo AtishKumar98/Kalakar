@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from django.contrib.auth import login
 from kalaakaar_registration.models import MyUser
 from rest_framework.response import Response
+from .serializers import RegisterSerializer,LoginSerializer
 from .serializers import UserSerializer,RegisterSerializer,LoginSerializer,CustomAuthTokenSerializer
 from django.contrib.auth.models import User
 from rest_framework.authentication import TokenAuthentication
@@ -28,8 +29,38 @@ from  Kalaakaar.settings import Email_Password
 from django.contrib.auth.hashers import make_password, check_password
 import requests
 # import pyrebase
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import auth
+from rest_framework.decorators import api_view
 import smtplib
 
+
+
+# path_for_cred_cert = './djangokalakar-firebase-adminsdk-ndlr6-e5182f449c.json'
+# cred = credentials.Certificate(path_for_cred_cert)
+# firebase_admin.initialize_app(cred)
+
+# # db = firestore.client()
+
+
+
+
+
+# def send_otp_sms(phone_number):
+#     otp = str(random.randint(100000, 999999))
+
+#     # Create the user with the provided phone number and OTP
+#     user = auth.create_user(phone_number=phone_number)
+#     user_id = user.uid
+
+#     # Generate the OTP verification code
+#     verification_code = auth.generate_phone_number_verification_code(phone_number)
+
+#     # Send the OTP via SMS
+#     auth.send_phone_number_verification_code(verification_code)
+
+#     print("OTP sent successfully")
 
 # Class based view to Get User Details using Token Authentication
 def user_details_view(request):
@@ -45,14 +76,33 @@ def user_details_view(request):
         return JsonResponse({'error': 'User not authenticated'}, status=401)
 
 #Class based view to register user
-class RegisterUserAPIView(generics.CreateAPIView):
-  permission_classes = (AllowAny,)
-  serializer_class = RegisterSerializer
+# class RegisterUserAPIView(generics.CreateAPIView):
+#   permission_classes = (AllowAny,)
+#   serializer_class = RegisterSerializer
 
+@api_view(['POST'])
+def submit_data(request):
+    serializer_point = RegisterSerializer(data=request.data)
+    if serializer_point.is_valid():
+      serializer_point.save()  # Save the data to the database
+      otp = serializer_point.data.get('otp')
+      Ph_n = serializer_point.data.get('Phone_number') 
+      # send_otp_sms(Ph_n)
+      print(serializer_point.data.get('email'))
+
+          # Perform OTP verification here
+      print(otp, 'OTTPP')
+       # Assuming the OTP is passed in the request data
+          # if verify_otp(otp):  # Implement your OTP verification logic
+      return Response(serializer_point.data, status=201)
+    else:
+        return Response(serializer_point.errors, status=400)
+            # return Response({'message': 'Invalid OTP'}, status=400)
 
 class VerifyOtp(APIView):
   
   def post(self, request):
+    serializer_point = RegisterSerializer(data=request.data)
     data = request.data
     phone = data.get('email')
     print(phone,'PHONE$$$$$$$$')

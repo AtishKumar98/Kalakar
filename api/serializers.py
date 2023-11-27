@@ -50,10 +50,10 @@ import smtplib
 
 
 
-class UserSerializer(serializers.ModelSerializer):
-  class Meta:
-    model = MyUser
-    fields = ['email', 'password1', 'password2', 'is_agreed' , 'full_name', 'choose_a_kalaakaar', 'Bussiness_name','city','Pincode' ]
+# class UserSerializer(serializers.ModelSerializer):
+#   class Meta:
+#     model = MyUser
+#     fields = ['email', 'password1', 'password2', 'is_agreed' , 'full_name', 'choose_a_kalaakaar', 'Bussiness_name','city','Pincode' ]
 
 
 
@@ -71,7 +71,7 @@ class RegisterSerializer(serializers.ModelSerializer):
   class Meta:
     model = MyUser
     fields = ('id','email', 'password', 'password2',
-          'full_name', 'choose_a_kalaakaar','Bussiness_name','city','Pincode','Phone_number','is_agreed')
+          'full_name', 'choose_a_kalaakaar','Bussiness_name','city','Pincode','Phone_number','is_agreed','otp')
     extra_kwargs = {
       'email': {'required': True},
       'full_name': {'required': True}
@@ -86,6 +86,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     send_number = validated_data['Phone_number'],
     email_address=validated_data['email']
     otp = random.randint(100000,999999)
+    validated_data['otp'] = otp
     message = f"Your Registration OTP for Kalakar is {otp}"
     email = MIMEMultipart()
     email.set_unixfrom('author')
@@ -110,7 +111,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     server.sendmail('hello@kalaakaar.co', email_address, email.as_string())
     print('SENT MAIL','FROM',email['From'],'TO',email_address ,msg_body)
     server.quit()
-    user = MyUser.objects.create(
+    user = MyUser(
       email=validated_data['email'],
       full_name=validated_data['full_name'],
       choose_a_kalaakaar=validated_data['choose_a_kalaakaar'],
@@ -118,13 +119,34 @@ class RegisterSerializer(serializers.ModelSerializer):
       city = validated_data['city'],
       Pincode = validated_data['Pincode'],
       is_agreed = validated_data['is_agreed'],
-      otp = otp
+      otp = validated_data['otp']
     )
+    email =validated_data['email']
     
     user.set_password(validated_data['password'])
-    user.save()
     return user
 
+
+# class UserRegistrationSerializer(serializers.ModelSerializer):
+#     password = serializers.CharField(write_only=True, required=True, style={'input_type': 'password'})
+
+#     class Meta:
+#         model = MyUser
+#         fields = ('username', 'password', 'email', 'first_name', 'last_name')
+
+#     def create(self, validated_data):
+#         otp = random.randint(100000,999999)
+#         user = MyUser.objects.create_user(
+#              email=validated_data['email'],
+#       full_name=validated_data['full_name'],
+#       choose_a_kalaakaar=validated_data['choose_a_kalaakaar'],
+#       Phone_number=validated_data['Phone_number'],
+#       city = validated_data['city'],
+#       Pincode = validated_data['Pincode'],
+#       is_agreed = validated_data['is_agreed'],
+#       otp = otp
+#         )
+#         return user
 
 
 class LoginSerializer(serializers.Serializer):
