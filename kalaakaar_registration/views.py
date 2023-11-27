@@ -275,9 +275,9 @@ def OTPRegistration(request):
         server = smtplib.SMTP_SSL('smtpout.secureserver.net',465)
         server.ehlo()
         # server.starttls(context=simple_email_context)
-        server.login('hello@kalaakaar.co',Email_Password)
+        server.login('atishkumar@atishkumar.co.in',Email_Password)
         #   server.login('AKIAYNJZLMUQQXPKMG5B','BItsVQqmsAojywKw8YzfvgpMbPyNBhOXgJ1e0Iz/OJB3')
-        server.sendmail('hello@kalaakaar.co', email_address, email.as_string())
+        server.sendmail('atishkumar@atishkumar.co.in', email_address, email.as_string())
         print('SENT MAIL','FROM',email['From'],'TO',email_address ,msg_body)
         server.quit()
 
