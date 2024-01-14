@@ -50,10 +50,10 @@ import smtplib
 
 
 
-# class UserSerializer(serializers.ModelSerializer):
-#   class Meta:
-#     model = MyUser
-#     fields = ['email', 'password1', 'password2', 'is_agreed' , 'full_name', 'choose_a_kalaakaar', 'Bussiness_name','city','Pincode' ]
+class UserSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = MyUser
+    fields = ['email', 'password1', 'password2', 'is_agreed' , 'full_name', 'choose_a_kalaakaar', 'Bussiness_name','city','Pincode' ]
 
 
 

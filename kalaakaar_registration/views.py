@@ -59,31 +59,51 @@ import ssl
 
 
 
-def send_OTP(number, message):
-    url = 'https://www.fast2sms.com/dev/bulkV2'
-    my_data = {
-    'sender_id': 'FSTSMS', 
-    'message': message, 
-    'language': 'english',
-    'route': 'p',
-    'numbers': number 
-}
+# def send_OTP(number, message):
+#     url = 'https://www.fast2sms.com/dev/bulkV2'
+#     payload  = {
+#     'sender_id': 'FSTSMS', 
+#     'message': message, 
+#     'language': 'english',
+#     'route': 'p',
+#     'numbers': number 
+# }
+#     headers = {
+#     'authorization': '6WE8VQDysDK3v2jgWuACTkuWFoOtIkpuDDgr3Hh1oF32uMSnIyHQdrKSBkmd',
+#     'Content-Type': "application/x-www-form-urlencoded",
+#     'Cache-Control': "no-cache"
+# }
+    
+    
+#     response = requests.request("POST",
+#                             url,
+#                             data = payload ,
+#                             headers = headers)
+#                             # load json data from source
+#     returned_msg = json.loads(response.text)
+#     print(returned_msg['message'])
+
+def send_OTP(numbers, variables_values, route='otp'):
+    url = "https://www.fast2sms.com/dev/bulkV2"
+
+    payload = {
+        'variables_values': variables_values,
+        'route': route,
+        'numbers': ','.join(map(str, numbers))
+    }
+
     headers = {
-    'authorization': 'ShG0stW0urbiBjedsQmCgGATd1RCDMgCVUwSG9f5rxCCMAJuro5NkR1oIWmi',
-    'Content-Type': "application/x-www-form-urlencoded",
-    'Cache-Control': "no-cache"
-}
-    
-    
-    response = requests.request("POST",
-                            url,
-                            data = my_data,
-                            headers = headers)
-                            # load json data from source
-    returned_msg = json.loads(response.text)
-    print(returned_msg['message'])
+        'authorization': '6WE8VQDysDK3v2jgWuACTkuWFoOtIkpuDDgr3Hh1oF32uMSnIyHQdrKSBkmd',  # Replace with your actual API key
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Cache-Control': 'no-cache',
+    }
 
-
+    try:
+        response = requests.post(url, data=payload, headers=headers)
+        returned_msg = response.json()
+        print(returned_msg['message'])
+    except Exception as e:
+        print(f"Error: {e}")
 
 
 # Create your views here.
@@ -140,9 +160,10 @@ def Registration(request):
             server.login('atishkumar@atishkumar.co.in',Email_Password)
             #   server.login('AKIAYNJZLMUQQXPKMG5B','BItsVQqmsAojywKw8YzfvgpMbPyNBhOXgJ1e0Iz/OJB3')
             server.sendmail('atishkumar@atishkumar.co.in', e, email.as_string())
-            print('SENT MAIL','FROM',email['From'],'TO',e ,msg_body)
+            # print('SENT MAIL','FROM',email['From'],'TO',e ,msg_body)
+            # send_OTP(p_number , msg_body)
+            send_OTP([p_number, "msg_body"], otp)
             server.quit()
-            send_OTP(p_number , msg_body)
             # print(fms3)
             # for fms in fms3:
             #     doc_reference = db.collection(u'Users').document(fms['Email'])
