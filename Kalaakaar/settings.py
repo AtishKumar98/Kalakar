@@ -27,8 +27,8 @@ SECRET_KEY = 'django-insecure-0if0hx*=z25*w(pf&k=cjmy2=b8boni=(e-q-cym8g=f&^a_oo
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
+Email_Password = 'Atish@4321'
 
 # Application definition
 
@@ -40,10 +40,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'kalaakaar_registration',
+    'api',
+    'rest_framework',
+    'knox',
+    'django_otp',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+     "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -53,7 +58,14 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Kalaakaar.urls'
-
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        # 'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        'knox.auth.TokenAuthentication',
+         'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ]
+}
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -91,22 +103,22 @@ WSGI_APPLICATION = 'Kalaakaar.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'database_2023_8.sqlite3',
-#     }
-# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'LetMeIn1',
-        'HOST':'pranay.cigcvjkafac4.ap-south-1.rds.amazonaws.com',
-        'PORT':'5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'database_2023_9.sqlite3',
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'postgres',
+#         'USER': 'postgres',
+#         'PASSWORD': 'LetMeIn1',
+#         'HOST':'pranay.cigcvjkafac4.ap-south-1.rds.amazonaws.com',
+#         'PORT':'5432',
+#     }
+# }
 
 
 # DATABASES = {
